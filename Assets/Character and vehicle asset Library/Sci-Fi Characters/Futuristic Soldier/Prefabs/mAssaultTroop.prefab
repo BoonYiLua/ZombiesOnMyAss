@@ -416,6 +416,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -788,6 +789,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1545,8 +1547,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 484680}
-  - component: {fileID: 11119856}
   - component: {fileID: 14374658}
+  - component: {fileID: 5598730784579674600}
   m_Layer: 0
   m_Name: mAssaultTroop
   m_TagString: Untagged
@@ -1574,55 +1576,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!111 &11119856
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 184816}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400054, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
-  m_Animations:
-  - {fileID: 7400002, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
-  - {fileID: 7400066, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
-  - {fileID: 7400064, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
-  - {fileID: 7400062, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
-  - {fileID: 7400056, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
-  - {fileID: 7400060, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
-  - {fileID: 7400058, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
-  - {fileID: 7400000, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
-  - {fileID: 7400012, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
-  - {fileID: 7400048, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
-  - {fileID: 7400050, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
-  - {fileID: 7400030, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
-  - {fileID: 7400010, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
-  - {fileID: 7400052, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
-  - {fileID: 7400026, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
-  - {fileID: 7400006, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
-  - {fileID: 7400054, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
-  - {fileID: 7400024, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
-  - {fileID: 7400004, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
-  - {fileID: 7400014, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
-  - {fileID: 7400032, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
-  - {fileID: 7400016, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
-  - {fileID: 7400020, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
-  - {fileID: 7400018, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
-  - {fileID: 7400034, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
-  - {fileID: 7400040, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
-  - {fileID: 7400022, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
-  - {fileID: 7400036, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
-  - {fileID: 7400038, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
-  - {fileID: 7400028, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
-  - {fileID: 7400008, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
-  - {fileID: 7400042, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
-  - {fileID: 7400044, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
-  - {fileID: 7400046, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 1
 --- !u!143 &14374658
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1641,6 +1594,25 @@ CharacterController:
   m_SkinWidth: 0.01
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.9, z: 0.1}
+--- !u!95 &5598730784579674600
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 184816}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 96208b20112607549a0668076fbb8ed9, type: 3}
+  m_Controller: {fileID: 9100000, guid: f6aab43131292d346921d7b870e08e12, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &185170
 GameObject:
   m_ObjectHideFlags: 0
