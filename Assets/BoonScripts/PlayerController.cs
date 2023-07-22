@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class PlayerController : MonoBehaviour {
     public float movementSpeed = 5f;
@@ -8,6 +9,9 @@ public class PlayerController : MonoBehaviour {
     private Rigidbody rb;
     private bool isGrounded;
 
+    public int currentWeapon = 0;
+    public GameObject[] weapons; // Array of weapon GameObjects
+    bool switchCooldown; 
     private void Awake() {
         rb = GetComponent<Rigidbody>();
     }
@@ -22,5 +26,28 @@ public class PlayerController : MonoBehaviour {
         Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput) * movementSpeed;
         movement.y = rb.velocity.y; // Preserve the current vertical velocity
         rb.velocity = movement;
+
+        // Weapon switch
+        if (Input.GetAxisRaw("Mouse ScrollWheel") != 0) {
+            if (switchCooldown) return;
+            switchCooldown = true;
+            currentWeapon += (int)Mathf.Sign(Input.GetAxisRaw("Mouse ScrollWheel"));
+            currentWeapon = Mathf.Clamp(currentWeapon, 0, weapons.Length - 1);
+            SwitchWeapon(currentWeapon);
+            StartCoroutine(waitSwitch());
+        }
+    }
+    IEnumerator waitSwitch() {
+        yield return new WaitForSeconds(0.5f);
+        switchCooldown = false;
+    }
+    private void SwitchWeapon(int weaponIndex) {
+        // Disable all weapons
+        for (int i = 0; i < weapons.Length; i++) {
+            weapons[i].SetActive(false);
+        }
+
+        // Enable the selected weapon
+        weapons[weaponIndex].SetActive(true);
     }
 }
