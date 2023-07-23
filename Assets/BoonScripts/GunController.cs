@@ -14,13 +14,11 @@ public class GunController : MonoBehaviour {
     private bool isReloading = false;
     private float nextFireTime = 0f;
 
-    private LaserSight laserSight; // Reference to the LaserSight script
 
     private void Start() {
         currentAmmo = maxAmmo;
 
-        // Get the LaserSight component attached to the gun object
-        laserSight = GetComponentInChildren<LaserSight>();
+     
     }
 
     private void Update() {

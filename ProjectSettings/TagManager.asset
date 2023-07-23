@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Wall
   - Enemy 3
+  - Target
   layers:
   - Default
   - TransparentFX

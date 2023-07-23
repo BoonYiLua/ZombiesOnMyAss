@@ -1,24 +1,38 @@
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-
 public class Bullet : MonoBehaviour {
-    public float bulletSpeed = 20f;
-    public float bulletLifetime = 2f;
+    private bool hitSomething = false;
 
-    private void Awake() {
-        Destroy(gameObject, bulletLifetime);
+    void Start() {
+        // Start the coroutine to despawn the bullet after 2 seconds.
+        StartCoroutine(DestroyAfterDelay(2f));
     }
 
-    private void Update() {
-        // Move the bullet forward based on its speed
-        transform.Translate(Vector3.forward * bulletSpeed * Time.deltaTime);
+    void OnTriggerEnter(Collider other) {
+        // Check if the bullet collides with any other collider.
+        // You can use tags or layers to specify which objects you want the bullet to interact with.
+
+        // In this example, we are checking if the other collider is tagged as "Target".
+        if (other.CompareTag("Target")) {
+            // Set hitSomething to true since the bullet hit the target.
+            hitSomething = true;
+
+            // Destroy the target.
+            Destroy(other.gameObject);
+
+            // Destroy the bullet itself.
+            Destroy(gameObject);
+        }
     }
 
-    private void OnTriggerEnter(Collider other) {
-        // Check if the bullet has hit something with a collider (excluding triggers and the player)
-        if (!other.isTrigger && !other.CompareTag("Player")) {
-            // Destroy the bullet
+    IEnumerator DestroyAfterDelay(float delay) {
+        // Wait for the specified delay.
+        yield return new WaitForSeconds(delay);
+
+        // Check if the bullet hasn't hit anything after the delay.
+        if (!hitSomething) {
+            // If it hasn't hit anything, destroy the bullet.
             Destroy(gameObject);
         }
     }
