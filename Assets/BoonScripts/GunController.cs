@@ -18,6 +18,9 @@ public class GunController : MonoBehaviour {
 
     private void Start() {
         currentAmmo = maxAmmo;
+
+        // Get the LaserSight component attached to the gun object
+        laserSight = GetComponentInChildren<LaserSight>();
     }
 
     private void Update() {
