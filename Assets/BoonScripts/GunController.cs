@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
+using System.Collections;
 public class GunController : MonoBehaviour {
     public GameObject bulletPrefab;
     public Transform firePoint;
@@ -11,8 +9,8 @@ public class GunController : MonoBehaviour {
     public float reloadTime = 1.5f;
     public float bulletSpeed = 20f;
 
-    private int currentAmmo; // The current total ammo.
-    private int currentMagazineAmmo; // The current ammo in the magazine.
+    [SerializeField] private int currentAmmo; // The current total ammo.
+    [SerializeField] private int currentMagazineAmmo; // The current ammo in the magazine.
     private bool isReloading = false;
     private float nextFireTime = 0f;
 
@@ -22,7 +20,7 @@ public class GunController : MonoBehaviour {
     }
 
     private void Update() {
-        if (currentMagazineAmmo <= 0 && !isReloading && Input.GetKeyDown(KeyCode.R)) {
+        if (currentMagazineAmmo <= 0 && !isReloading) {
             StartCoroutine(Reload());
             return;
         }
@@ -36,7 +34,13 @@ public class GunController : MonoBehaviour {
             nextFireTime = Time.time + .1f / fireRate;
             Shoot();
         }
+
+        // Check if the player wants to manually reload
+        if (Input.GetKeyDown(KeyCode.R) && currentAmmo > 0 && currentMagazineAmmo < magazineSize) {
+            StartCoroutine(Reload());
+        }
     }
+
 
     private void Shoot() {
         if (currentMagazineAmmo > 0) {
@@ -76,5 +80,17 @@ public class GunController : MonoBehaviour {
 
     public void AddAmmo(int amount) {
         currentAmmo = Mathf.Clamp(currentAmmo + amount, 0, maxAmmo);
+    }
+
+    // Custom property to show the remaining bullets in the magazine in the Inspector
+    public int CurrentMagazineAmmo {
+        get { return currentMagazineAmmo; }
+        set { currentMagazineAmmo = value; }
+    }
+
+    // Custom property to show the remaining total ammo in the Inspector
+    public int CurrentAmmo {
+        get { return currentAmmo; }
+        set { currentAmmo = value; }
     }
 }
