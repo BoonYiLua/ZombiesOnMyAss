@@ -8,10 +8,13 @@ public class PlayerController : MonoBehaviour {
 
     private Rigidbody rb;
     private bool isGrounded;
+    private bool isNearAmmoBox = false;
+    private AmmoBox currentAmmoBox = null;
 
     public int currentWeapon = 0;
     public GameObject[] weapons; // Array of weapon GameObjects
-    bool switchCooldown; 
+    bool switchCooldown;
+
     private void Awake() {
         rb = GetComponent<Rigidbody>();
     }
@@ -36,11 +39,29 @@ public class PlayerController : MonoBehaviour {
             SwitchWeapon(currentWeapon);
             StartCoroutine(waitSwitch());
         }
+
+        // Interaction with ammo box
+        if (isNearAmmoBox && Input.GetKeyDown(KeyCode.E)) {
+            if (currentAmmoBox != null) {
+                currentAmmoBox.ClaimAmmo();
+            }
+        }
     }
-    IEnumerator waitSwitch() {
-        yield return new WaitForSeconds(0.5f);
-        switchCooldown = false;
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.CompareTag("AmmoBox")) {
+            isNearAmmoBox = true;
+            currentAmmoBox = other.GetComponent<AmmoBox>();
+        }
     }
+
+    private void OnTriggerExit(Collider other) {
+        if (other.CompareTag("AmmoBox")) {
+            isNearAmmoBox = false;
+            currentAmmoBox = null;
+        }
+    }
+
     private void SwitchWeapon(int weaponIndex) {
         // Disable all weapons
         for (int i = 0; i < weapons.Length; i++) {
@@ -49,6 +70,10 @@ public class PlayerController : MonoBehaviour {
 
         // Enable the selected weapon
         weapons[weaponIndex].SetActive(true);
-       
+    }
+
+    private IEnumerator waitSwitch() {
+        yield return new WaitForSeconds(0.5f);
+        switchCooldown = false;
     }
 }

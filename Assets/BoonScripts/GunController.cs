@@ -79,18 +79,13 @@ public class GunController : MonoBehaviour {
     }
 
     public void AddAmmo(int amount) {
-        currentAmmo = Mathf.Clamp(currentAmmo + amount, 0, maxAmmo);
-    }
-
-    // Custom property to show the remaining bullets in the magazine in the Inspector
-    public int CurrentMagazineAmmo {
-        get { return currentMagazineAmmo; }
-        set { currentMagazineAmmo = value; }
-    }
-
-    // Custom property to show the remaining total ammo in the Inspector
-    public int CurrentAmmo {
-        get { return currentAmmo; }
-        set { currentAmmo = value; }
+        // If the current ammo + amount exceeds the max ammo, add the excess ammo to the current magazine ammo
+        if (currentAmmo + amount > maxAmmo) {
+            int excessAmmo = (currentAmmo + amount) - maxAmmo;
+            currentMagazineAmmo = Mathf.Clamp(currentMagazineAmmo + excessAmmo, 0, magazineSize);
+            currentAmmo = maxAmmo;
+        } else {
+            currentAmmo = Mathf.Clamp(currentAmmo + amount, 0, maxAmmo);
+        }
     }
 }

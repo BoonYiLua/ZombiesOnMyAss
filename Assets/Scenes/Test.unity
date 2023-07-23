@@ -1134,6 +1134,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AmmoBox_5
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b4ef32dfae3b0de47b1f7273feaf4fda, type: 3}
+      propertyPath: m_TagString
+      value: AmmoBox
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b4ef32dfae3b0de47b1f7273feaf4fda, type: 3}
 --- !u!1 &936320520 stripped
@@ -1167,6 +1171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ammoAmount: 30
+  cooldownTime: 5
 --- !u!54 &936320526
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1194,8 +1199,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.8060726, y: 1.5000005, z: 0.50000066}
-  m_Center: {x: -0.028036118, y: -0.00000005960465, z: 0.25000015}
+  m_Size: {x: 0.9261401, y: 1.5000005, z: 0.50000066}
+  m_Center: {x: -0.088069916, y: -0.00000005960465, z: 0.25000015}
 --- !u!1 &1136707269
 GameObject:
   m_ObjectHideFlags: 3
