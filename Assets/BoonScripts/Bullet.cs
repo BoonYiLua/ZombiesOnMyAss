@@ -3,17 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour {
-    public float bulletLifetime = 2f; // Time in seconds before the bullet is destroyed
+    public float bulletSpeed = 20f;
+    public float bulletLifetime = 2f;
 
-    private void Start() {
-        // Set the bullet to be destroyed after a certain amount of time
+    private void Awake() {
         Destroy(gameObject, bulletLifetime);
     }
 
+    private void Update() {
+        // Move the bullet forward based on its speed
+        transform.Translate(Vector3.forward * bulletSpeed * Time.deltaTime);
+    }
+
     private void OnTriggerEnter(Collider other) {
-        // Check if the bullet has hit something with a collider (excluding triggers)
-        if (!other.isTrigger) {
-            // Destroy the bullet when it hits an object
+        // Check if the bullet has hit something with a collider (excluding triggers and the player)
+        if (!other.isTrigger && !other.CompareTag("Player")) {
+            // Destroy the bullet
             Destroy(gameObject);
         }
     }

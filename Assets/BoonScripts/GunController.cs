@@ -14,6 +14,8 @@ public class GunController : MonoBehaviour {
     private bool isReloading = false;
     private float nextFireTime = 0f;
 
+    private LaserSight laserSight; // Reference to the LaserSight script
+
     private void Start() {
         currentAmmo = maxAmmo;
     }
@@ -38,7 +40,7 @@ public class GunController : MonoBehaviour {
     }
 
     private void Shoot() {
-        // Create the bullet at the FirePoint position and rotation
+        // Instantiate the bullet prefab at the FirePoint position and rotation
         GameObject newBullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
 
         // Get the Rigidbody component of the bullet.
@@ -58,7 +60,7 @@ public class GunController : MonoBehaviour {
         isReloading = true;
 
         // Perform reload animation or logic here
-        Debug.Log("Reloading...");
+        Debug.Log("Reloading");
 
         yield return new WaitForSeconds(reloadTime);
 
