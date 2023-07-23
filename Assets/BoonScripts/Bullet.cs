@@ -6,8 +6,8 @@ public class Bullet : MonoBehaviour {
     private bool hitSomething = false;
 
     void Start() {
-        // Start the coroutine to despawn the bullet after 0.5 seconds.
-        StartCoroutine(DestroyAfterDelay(0.5f));
+        // Start the coroutine to despawn the bullet 
+        StartCoroutine(DestroyAfterDelay(0.8f));
     }
 
     void OnCollisionEnter(Collision other) {

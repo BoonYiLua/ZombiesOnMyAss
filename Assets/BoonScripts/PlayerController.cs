@@ -49,5 +49,6 @@ public class PlayerController : MonoBehaviour {
 
         // Enable the selected weapon
         weapons[weaponIndex].SetActive(true);
+       
     }
 }

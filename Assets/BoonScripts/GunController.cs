@@ -27,6 +27,11 @@ public class GunController : MonoBehaviour {
             return;
         }
 
+        // Check if the player is reloading, and return if true
+        if (isReloading) {
+            return;
+        }
+
         if (Input.GetButton("Fire1") && Time.time >= nextFireTime) {
             nextFireTime = Time.time + .1f / fireRate;
             Shoot();
