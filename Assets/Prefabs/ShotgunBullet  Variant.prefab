@@ -11,9 +11,13 @@ PrefabInstance:
       propertyPath: damageAmount
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 3326102556386387264, guid: cd2c7148d122fc4429924f192a99f374, type: 3}
+      propertyPath: explosionPrefab
+      value: 
+      objectReference: {fileID: 3055127568852761818, guid: d5429b57da3261a49bedef962ee6a843, type: 3}
     - target: {fileID: 3326102556386387267, guid: cd2c7148d122fc4429924f192a99f374, type: 3}
       propertyPath: m_Name
-      value: 'ShotgunBullet '
+      value: ShotgunBullet  Variant
       objectReference: {fileID: 0}
     - target: {fileID: 3326102556386387269, guid: cd2c7148d122fc4429924f192a99f374, type: 3}
       propertyPath: m_RootOrder

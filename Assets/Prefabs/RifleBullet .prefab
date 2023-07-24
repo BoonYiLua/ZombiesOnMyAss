@@ -5076,6 +5076,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageAmount: 1
+  explosionPrefab: {fileID: 3055127568852761818, guid: d5429b57da3261a49bedef962ee6a843, type: 3}
 --- !u!1 &3326102557527963558
 GameObject:
   m_ObjectHideFlags: 0
