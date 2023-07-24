@@ -5,7 +5,7 @@ using UnityEngine;
 public class GrenadeThrower : MonoBehaviour {
     public GameObject grenadePrefab; // grenade prefab that will be thrown
     public int maxGrenadeCount = 3; // maximum number of grenades the player can throw
-    public float throwForceMultiplier = 10f; // Multiplier to control the throw force
+    public float throwForceMultiplier = 20f; // Multiplier to control the throw force (Increase this value to throw further)
     private int grenadeCount = 0; // current number of grenades thrown
 
     // Update is called once per frame
@@ -22,8 +22,8 @@ public class GrenadeThrower : MonoBehaviour {
         // Get the Rigidbody component of the grenade (make sure it has one)
         Rigidbody rb = grenade.GetComponent<Rigidbody>();
 
-        // Set a constant throw force value (e.g., 3.5f)
-        float throwForce = 3.5f;
+        // Set a constant throw force value (e.g., 3.5f) multiplied by the throwForceMultiplier
+        float throwForce = 3.5f * throwForceMultiplier;
 
         // Get the player's input direction
         Vector3 playerInputDirection = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
