@@ -1,6 +1,4 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour {
     public float movementSpeed = 5f;
@@ -15,14 +13,27 @@ public class PlayerController : MonoBehaviour {
     private AmmoBox currentAmmoBox = null;
 
     private int currentWeapon = 0;
-    private List<GameObject> availableWeapons = new List<GameObject>();
+    public System.Collections.Generic.List<GameObject> availableWeapons = new System.Collections.Generic.List<GameObject>();
     private bool switchCooldown;
+    public int weaponTotal;
 
     private bool isDowned = false; // Indicates whether the player is in a downed state or not
 
+    [Header("Player Health")]
+    public int maxHealth = 100;
+    public int currentHealth; // Serialized variable for current health
+    private bool isEquippedMedkit; // Indicates whether the player has the medkit equipped
+    private GameObject equippedMedkit; // Reference to the currently equipped medkit
+    private int medkitCount = 1; // Number of available medkits
+
     private void Awake() {
         rb = GetComponent<Rigidbody>();
+        currentHealth = health; // Initialize the current health to the maximum health on Awake
         InitializeWeapons();
+    }
+
+    private void Start() {
+        currentHealth = health;
     }
 
     private void InitializeWeapons() {
@@ -64,8 +75,13 @@ public class PlayerController : MonoBehaviour {
         }
 
         // Handle player health
-        if (!isDowned && health <= 0) {
+        if (!isDowned && currentHealth <= 0) {
             Die(); // Player is dead if health drops to or below zero
+        }
+
+        // Right-click to use the equipped medkit
+        if (isEquippedMedkit && Input.GetMouseButtonDown(1)) {
+            UseMedkit();
         }
     }
 
@@ -93,35 +109,56 @@ public class PlayerController : MonoBehaviour {
         availableWeapons[weaponIndex].SetActive(true);
     }
 
-    private IEnumerator waitSwitch() {
+    private System.Collections.IEnumerator waitSwitch() {
         yield return new WaitForSeconds(0.5f);
         switchCooldown = false;
     }
 
-    // Method for dealing damage to the player
     public void TakeDamage(int damageAmount) {
-        if (!isDowned && health > 0) {
-            health -= damageAmount;
-            if (health <= 0) {
-                health = 0; // Ensure health doesn't go below zero
+        if (!isDowned && currentHealth > 0) {
+            currentHealth -= damageAmount;
+            if (currentHealth <= 0) {
+                currentHealth = 0; // Ensure health doesn't go below zero
                 Die(); // Player is dead if health drops to zero
             }
         }
     }
 
-    // Method for player's death
     private void Die() {
         // Add any actions you want to happen when the player dies, like game over, respawn, etc.
         isDowned = true; // Set the player to a downed state
     }
 
-    // Method to revive the player
     public void Revive() {
         isDowned = false; // Set the player back to normal state
-        health = 100; // Set the health back to maximum or any other value you prefer for revival
+        currentHealth = health; // Set the health back to maximum or any other value you prefer for revival
     }
 
-    // Method for picking up a new weapon
+    public int CheckPickup() {
+        weaponTotal = 0;
+        foreach (GameObject W in availableWeapons) {
+            if (weaponTotal < 2) {
+                W.GetComponent<GunController>();
+                weaponTotal++;
+            }
+        }
+        return weaponTotal;
+    }
+
+    public void Pickup(int weaponTotal, GameObject weapon, GameObject weaponPickup) {
+        if (weaponTotal < 2) {
+            availableWeapons.Add(weapon);
+            Destroy(weaponPickup);
+        }
+    }
+
+    public void SwapWeapon(int weaponIndex, GameObject weapon, GameObject weaponPickup) {
+        weapons[weaponIndex] = null;
+        weapons[weaponIndex] = weapon;
+        Destroy(weaponPickup);
+        //Update visuals
+    }
+
     public void PickupWeapon(int weaponIndex) {
         if (weaponIndex >= 0 && weaponIndex < availableWeapons.Count) {
             // Activate the new weapon
@@ -129,6 +166,35 @@ public class PlayerController : MonoBehaviour {
 
             // Update the current weapon index to the picked up weapon
             currentWeapon = weaponIndex;
+        }
+    }
+
+    public void PickupMedkit(int healAmount, GameObject medkitObject, GameObject pickupObject) {
+        if (!isEquippedMedkit && medkitCount > 0) {
+            isEquippedMedkit = true;
+            equippedMedkit = medkitObject;
+            medkitCount--;
+
+            // Show some visual indicator that the player has the medkit equipped (e.g., highlight the medkit object)
+            // For example, you can change the medkit's material or add some glowing effect.
+
+            // Add the heal amount to the current health but make sure it doesn't exceed the maximum health.
+            currentHealth = Mathf.Min(currentHealth + healAmount, maxHealth);
+
+            // Destroy the medkit since it's been used.
+            Destroy(pickupObject);
+        }
+    }
+
+    public void UseMedkit() {
+        // Ensure the player can't use the medkit while in a downed state or at full health.
+        if (!isDowned && currentHealth < maxHealth) {
+            // Heal the player by the medkit's heal amount.
+            currentHealth = Mathf.Min(currentHealth + equippedMedkit.GetComponent<Medkit>().healAmount, maxHealth);
+
+            // Remove the equipped medkit.
+            isEquippedMedkit = false;
+            Destroy(equippedMedkit);
         }
     }
 }

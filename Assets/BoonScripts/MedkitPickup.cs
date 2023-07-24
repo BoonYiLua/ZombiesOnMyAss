@@ -1,12 +1,12 @@
 using UnityEngine;
 
-public class WeaponPickup : MonoBehaviour {
-    public int weaponIndex; // The index of the weapon in the PlayerController's weapons array
+public class MedkitPickup : MonoBehaviour {
+    public int healAmount = 50; // Amount of health restored by the medkit
     public float rotationSpeed = 60f; // The speed at which the pickup rotates
 
     // Reference to the PlayerController script
     public PlayerController playerController;
-    public GameObject GunPrefab;
+    public GameObject medkitPrefab;
 
     private void Update() {
         // Rotate the pickup object around its up-axis (y-axis in most cases)
@@ -15,11 +15,9 @@ public class WeaponPickup : MonoBehaviour {
 
     private void OnTriggerEnter(Collider collision) {
         if (collision.gameObject.CompareTag("Player")) {
-            // Use the playerController reference to call the PickupWeapon method
+            // Use the playerController reference to call the PickupMedkit method
             if (playerController != null) {
-                playerController.Pickup(playerController.CheckPickup(), GunPrefab, gameObject);
-
-   
+                playerController.PickupMedkit(healAmount, medkitPrefab, gameObject);
             }
         }
     }
