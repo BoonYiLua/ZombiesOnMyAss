@@ -1,22 +1,33 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour {
     public float movementSpeed = 5f;
     public Transform groundCheck;
     public LayerMask groundLayer;
+    public GameObject[] weapons; // Array of weapon GameObjects
 
     private Rigidbody rb;
     private bool isGrounded;
     private bool isNearAmmoBox = false;
     private AmmoBox currentAmmoBox = null;
 
-    public int currentWeapon = 0;
-    public GameObject[] weapons; // Array of weapon GameObjects
-    bool switchCooldown;
+    private int currentWeapon = 0;
+    private List<GameObject> availableWeapons = new List<GameObject>();
+    private bool switchCooldown;
 
     private void Awake() {
         rb = GetComponent<Rigidbody>();
+        InitializeWeapons();
+    }
+
+    private void InitializeWeapons() {
+        for (int i = 0; i < weapons.Length; i++) {
+            weapons[i].SetActive(false);
+            availableWeapons.Add(weapons[i]);
+        }
+        SwitchWeapon(currentWeapon);
     }
 
     private void Update() {
@@ -35,7 +46,7 @@ public class PlayerController : MonoBehaviour {
             if (switchCooldown) return;
             switchCooldown = true;
             currentWeapon += (int)Mathf.Sign(Input.GetAxisRaw("Mouse ScrollWheel"));
-            currentWeapon = Mathf.Clamp(currentWeapon, 0, weapons.Length - 1);
+            currentWeapon = Mathf.Clamp(currentWeapon, 0, availableWeapons.Count - 1);
             SwitchWeapon(currentWeapon);
             StartCoroutine(waitSwitch());
         }
@@ -64,16 +75,42 @@ public class PlayerController : MonoBehaviour {
 
     private void SwitchWeapon(int weaponIndex) {
         // Disable all weapons
-        for (int i = 0; i < weapons.Length; i++) {
-            weapons[i].SetActive(false);
+        for (int i = 0; i < availableWeapons.Count; i++) {
+            availableWeapons[i].SetActive(false);
         }
 
         // Enable the selected weapon
-        weapons[weaponIndex].SetActive(true);
+        availableWeapons[weaponIndex].SetActive(true);
     }
 
     private IEnumerator waitSwitch() {
         yield return new WaitForSeconds(0.5f);
         switchCooldown = false;
+    }
+
+    // Method for picking up a new weapon
+    public void PickupWeapon(int weaponIndex) {
+        if (weaponIndex >= 0 && weaponIndex < availableWeapons.Count) {
+            int currentWeaponIndex = GetCurrentWeaponIndex();
+
+            // Deactivate the current weapon
+            availableWeapons[currentWeaponIndex].SetActive(false);
+
+            // Activate the new weapon
+            availableWeapons[weaponIndex].SetActive(true);
+
+            // Update the current weapon index
+            currentWeapon = weaponIndex;
+        }
+    }
+
+    // Method to get the current weapon index
+    private int GetCurrentWeaponIndex() {
+        for (int i = 0; i < availableWeapons.Count; i++) {
+            if (availableWeapons[i].activeSelf) {
+                return i;
+            }
+        }
+        return 0; // Default to the first weapon if none is found active
     }
 }
