@@ -41,7 +41,6 @@ public class GunController : MonoBehaviour {
         }
     }
 
-
     private void Shoot() {
         if (currentMagazineAmmo > 0) {
             // Instantiate the bullet prefab at the FirePoint position and rotation
