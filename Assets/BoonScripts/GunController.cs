@@ -9,6 +9,7 @@ public class GunController : MonoBehaviour {
     public float fireRate = 0.2f;
     public float reloadTime = 1.5f;
     public float bulletSpeed = 20f;
+    public int bulletsPerShot = 1; // Number of bullets fired per shot
 
     [SerializeField] private int currentAmmo; // The current total ammo.
     [SerializeField] private int currentMagazineAmmo; // The current ammo in the magazine.
@@ -33,7 +34,9 @@ public class GunController : MonoBehaviour {
 
         if (Input.GetButton("Fire1") && Time.time >= nextFireTime) {
             nextFireTime = Time.time + .1f / fireRate;
-            Shoot();
+            for (int i = 0; i < bulletsPerShot; i++) {
+                Shoot();
+            }
         }
 
         // Check if the player wants to manually reload

@@ -1,12 +1,12 @@
 using UnityEngine;
 using System.Collections;
 
-
 public class Bullet : MonoBehaviour {
+    public int damageAmount = 25; // Amount of damage the bullet deals to zombies
     private bool hitSomething = false;
 
     void Start() {
-        // Start the coroutine to despawn the bullet 
+        // Start the coroutine to despawn the bullet
         StartCoroutine(DestroyAfterDelay(0.8f));
     }
 
@@ -14,11 +14,19 @@ public class Bullet : MonoBehaviour {
         // Check if the bullet collides with any other collider.
         // You can use tags or layers to specify which objects you want the bullet to interact with.
 
-        // In this example, we are checking if the other collider is tagged as "Target".
-        if (other.gameObject.CompareTag("Target")) {
-            // Destroy the target.
-            Destroy(other.gameObject);
-            hitSomething = true; // Set hitSomething to true since the bullet hit the target.
+        // In this example, we are checking if the other collider is tagged as "Zombie".
+        if (other.gameObject.CompareTag("Zombie")) {
+            // Get the ZombieController component of the zombie
+            ZombieController zombieController = other.gameObject.GetComponent<ZombieController>();
+
+            // If the zombie has a ZombieController component, deal damage to them
+            if (zombieController != null) {
+                zombieController.TakeDamage(damageAmount);
+            }
+
+            // Destroy the bullet after hitting the zombie.
+            Destroy(gameObject);
+            hitSomething = true; // Set hitSomething to true since the bullet hit the zombie.
         } else if (other.gameObject.CompareTag("Wall")) {
             // Destroy the bullet if it hits a wall.
             Destroy(gameObject);

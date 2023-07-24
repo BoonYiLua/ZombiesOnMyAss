@@ -8,8 +8,8 @@ TagManager:
   - Enemy 3
   - Target
   - AmmoBox
-  - Enemy 1
   - WeaponPickup
+  - Zombie
   layers:
   - Default
   - TransparentFX

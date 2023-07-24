@@ -3,17 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ZombieController : MonoBehaviour {
-    public int damageAmount = 10; // Amount of damage the zombie deals to the player
+    public int maxHealth = 100; // Maximum health of the zombie
+    private int currentHealth;   // Current health of the zombie
 
-    private void OnCollisionEnter(Collision collision) {
-        if (collision.gameObject.CompareTag("Player")) {
-            // Get the PlayerController component of the player
-            PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
+    private void Start() {
+        currentHealth = maxHealth; // Initialize the zombie's health to its maximum value
+    }
 
-            // If the player has a PlayerController component, deal damage to them
-            if (playerController != null) {
-                playerController.TakeDamage(damageAmount);
-            }
+    public void TakeDamage(int damageAmount) {
+        currentHealth -= damageAmount;
+
+        if (currentHealth <= 0) {
+            Die();
         }
     }
+
+    private void Die() {
+        // Implement any death behavior for the zombie here.
+        // For example, play a death animation or destroy the zombie object.
+        Destroy(gameObject);
+    }
+
+    // Rest of the ZombieController script remains unchanged.
 }
