@@ -89,20 +89,15 @@ public class PlayerController : MonoBehaviour {
     }
 
     // Method for picking up a new weapon
-    public void PickupWeapon(int weaponIndex) {
-        if (weaponIndex >= 0 && weaponIndex < availableWeapons.Count) {
-            int currentWeaponIndex = GetCurrentWeaponIndex();
+public void PickupWeapon(int weaponIndex) {
+    if (weaponIndex >= 0 && weaponIndex < availableWeapons.Count) {
+        // Activate the new weapon
+        availableWeapons[weaponIndex].SetActive(true);
 
-            // Deactivate the current weapon
-            availableWeapons[currentWeaponIndex].SetActive(false);
-
-            // Activate the new weapon
-            availableWeapons[weaponIndex].SetActive(true);
-
-            // Update the current weapon index
-            currentWeapon = weaponIndex;
-        }
+        // Update the current weapon index to the picked up weapon
+        currentWeapon = weaponIndex;
     }
+}
 
     // Method to get the current weapon index
     private int GetCurrentWeaponIndex() {
