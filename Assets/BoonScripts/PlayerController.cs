@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour {
     public Transform groundCheck;
     public LayerMask groundLayer;
     public GameObject[] weapons; // Array of weapon GameObjects
+    public int health = 100; // Player's health
 
     private Rigidbody rb;
     private bool isGrounded;
@@ -16,6 +17,8 @@ public class PlayerController : MonoBehaviour {
     private int currentWeapon = 0;
     private List<GameObject> availableWeapons = new List<GameObject>();
     private bool switchCooldown;
+
+    private bool isDowned = false; // Indicates whether the player is in a downed state or not
 
     private void Awake() {
         rb = GetComponent<Rigidbody>();
@@ -35,14 +38,16 @@ public class PlayerController : MonoBehaviour {
         isGrounded = Physics.CheckSphere(groundCheck.position, 0.1f, groundLayer);
 
         // Player movement
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-        Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput) * movementSpeed;
-        movement.y = rb.velocity.y; // Preserve the current vertical velocity
-        rb.velocity = movement;
+        if (!isDowned) {
+            float horizontalInput = Input.GetAxis("Horizontal");
+            float verticalInput = Input.GetAxis("Vertical");
+            Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput) * movementSpeed;
+            movement.y = rb.velocity.y; // Preserve the current vertical velocity
+            rb.velocity = movement;
+        }
 
         // Weapon switch
-        if (Input.GetAxisRaw("Mouse ScrollWheel") != 0) {
+        if (!isDowned && Input.GetAxisRaw("Mouse ScrollWheel") != 0) {
             if (switchCooldown) return;
             switchCooldown = true;
             currentWeapon += (int)Mathf.Sign(Input.GetAxisRaw("Mouse ScrollWheel"));
@@ -52,10 +57,15 @@ public class PlayerController : MonoBehaviour {
         }
 
         // Interaction with ammo box
-        if (isNearAmmoBox && Input.GetKeyDown(KeyCode.E)) {
+        if (!isDowned && isNearAmmoBox && Input.GetKeyDown(KeyCode.E)) {
             if (currentAmmoBox != null) {
                 currentAmmoBox.ClaimAmmo();
             }
+        }
+
+        // Handle player health
+        if (!isDowned && health <= 0) {
+            Die(); // Player is dead if health drops to or below zero
         }
     }
 
@@ -88,24 +98,37 @@ public class PlayerController : MonoBehaviour {
         switchCooldown = false;
     }
 
-    // Method for picking up a new weapon
-public void PickupWeapon(int weaponIndex) {
-    if (weaponIndex >= 0 && weaponIndex < availableWeapons.Count) {
-        // Activate the new weapon
-        availableWeapons[weaponIndex].SetActive(true);
-
-        // Update the current weapon index to the picked up weapon
-        currentWeapon = weaponIndex;
-    }
-}
-
-    // Method to get the current weapon index
-    private int GetCurrentWeaponIndex() {
-        for (int i = 0; i < availableWeapons.Count; i++) {
-            if (availableWeapons[i].activeSelf) {
-                return i;
+    // Method for dealing damage to the player
+    public void TakeDamage(int damageAmount) {
+        if (!isDowned && health > 0) {
+            health -= damageAmount;
+            if (health <= 0) {
+                health = 0; // Ensure health doesn't go below zero
+                Die(); // Player is dead if health drops to zero
             }
         }
-        return 0; // Default to the first weapon if none is found active
+    }
+
+    // Method for player's death
+    private void Die() {
+        // Add any actions you want to happen when the player dies, like game over, respawn, etc.
+        isDowned = true; // Set the player to a downed state
+    }
+
+    // Method to revive the player
+    public void Revive() {
+        isDowned = false; // Set the player back to normal state
+        health = 100; // Set the health back to maximum or any other value you prefer for revival
+    }
+
+    // Method for picking up a new weapon
+    public void PickupWeapon(int weaponIndex) {
+        if (weaponIndex >= 0 && weaponIndex < availableWeapons.Count) {
+            // Activate the new weapon
+            availableWeapons[weaponIndex].SetActive(true);
+
+            // Update the current weapon index to the picked up weapon
+            currentWeapon = weaponIndex;
+        }
     }
 }
