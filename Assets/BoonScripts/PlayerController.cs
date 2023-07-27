@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour {
 
     private bool isDowned = false; // Indicates whether the player is in a downed state or not
 
+     Animator PlayerMovement;
+
     [Header("Player Health")]
     public int maxHealth = 100;
     public int currentHealth; // Serialized variable for current health
@@ -30,10 +32,12 @@ public class PlayerController : MonoBehaviour {
         rb = GetComponent<Rigidbody>();
         currentHealth = health; // Initialize the current health to the maximum health on Awake
         InitializeWeapons();
+        
     }
 
     private void Start() {
         currentHealth = health;
+        PlayerMovement = GetComponent<Animator>();
     }
 
     private void InitializeWeapons() {
@@ -45,6 +49,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void Update() {
+        
         // Check if the player is grounded
         isGrounded = Physics.CheckSphere(groundCheck.position, 0.1f, groundLayer);
 
@@ -52,9 +57,12 @@ public class PlayerController : MonoBehaviour {
         if (!isDowned) {
             float horizontalInput = Input.GetAxis("Horizontal");
             float verticalInput = Input.GetAxis("Vertical");
+            PlayerMovement.SetFloat("MoveX", horizontalInput);
+            PlayerMovement.SetFloat("MoveY", verticalInput);
             Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput) * movementSpeed;
             movement.y = rb.velocity.y; // Preserve the current vertical velocity
             rb.velocity = movement;
+
         }
 
         // Weapon switch
@@ -195,6 +203,7 @@ public class PlayerController : MonoBehaviour {
             // Remove the equipped medkit.
             isEquippedMedkit = false;
             Destroy(equippedMedkit);
+            
         }
     }
 }
