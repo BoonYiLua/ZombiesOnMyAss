@@ -600,19 +600,19 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: MoveY
     m_Type: 1
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Attack
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Full Body
@@ -899,7 +899,7 @@ AnimatorStateMachine:
     m_Position: {x: 520, y: 620, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -825305763216926103}
-    m_Position: {x: 310, y: 170, z: 0}
+    m_Position: {x: 280, y: 160, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7400295559784736896}
     m_Position: {x: 338.93896, y: 227.98965, z: 0}
@@ -1192,8 +1192,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: 96a97b3f611c1904cb87733361aa1d12,
-    type: 3}
+  m_Motion: {fileID: -203655887218126122, guid: 96a97b3f611c1904cb87733361aa1d12, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
