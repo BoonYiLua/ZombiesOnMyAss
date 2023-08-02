@@ -109,7 +109,7 @@ public class PlayerController : MonoBehaviour {
 
     private void SwitchWeapon(int weaponIndex) {
         // Disable all weapons
-        for (int i = 0; i < availableWeapons.Count; i++) {
+        for (int i = 0; i < availableWeapons.Count;) {
             availableWeapons[i].SetActive(false);
         }
 
