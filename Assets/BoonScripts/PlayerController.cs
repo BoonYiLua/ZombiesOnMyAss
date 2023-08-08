@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour {
     private void Awake() {
         rb = GetComponent<Rigidbody>();
         currentHealth = health; // Initialize the current health to the maximum health on Awake
-        InitializeWeapons();
+        //InitializeWeapons();
         
     }
 
@@ -49,47 +49,47 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void Update() {
-        
-        // Check if the player is grounded
-        isGrounded = Physics.CheckSphere(groundCheck.position, 0.1f, groundLayer);
 
-        // Player movement
-        if (!isDowned) {
+       // Check if the player is grounded
+       isGrounded = Physics.CheckSphere(groundCheck.position, 0.1f, groundLayer);
+
+       // Player movement
+      if (!isDowned) {
             float horizontalInput = Input.GetAxis("Horizontal");
-            float verticalInput = Input.GetAxis("Vertical");
-            PlayerMovement.SetFloat("MoveX", horizontalInput);
-            PlayerMovement.SetFloat("MoveY", verticalInput);
-            Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput) * movementSpeed;
-            movement.y = rb.velocity.y; // Preserve the current vertical velocity
+          float verticalInput = Input.GetAxis("Vertical");
+          PlayerMovement.SetFloat("MoveX", horizontalInput);
+           PlayerMovement.SetFloat("MoveY", verticalInput);
+           Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput) * movementSpeed;
+          movement.y = rb.velocity.y; // Preserve the current vertical velocity
             rb.velocity = movement;
 
-        }
+          // Weapon switch
+          if (Input.GetAxisRaw("Mouse ScrollWheel") != 0) {
+                if (switchCooldown) return;
+                switchCooldown = true;
+                currentWeapon += (int)Mathf.Sign(Input.GetAxisRaw("Mouse ScrollWheel"));
+                currentWeapon = Mathf.Clamp(currentWeapon, 0, availableWeapons.Count - 1);
+                SwitchWeapon(currentWeapon);
+                StartCoroutine(waitSwitch());
+          }
 
-        // Weapon switch
-        if (!isDowned && Input.GetAxisRaw("Mouse ScrollWheel") != 0) {
-            if (switchCooldown) return;
-            switchCooldown = true;
-            currentWeapon += (int)Mathf.Sign(Input.GetAxisRaw("Mouse ScrollWheel"));
-            currentWeapon = Mathf.Clamp(currentWeapon, 0, availableWeapons.Count - 1);
-            SwitchWeapon(currentWeapon);
-            StartCoroutine(waitSwitch());
-        }
-
-        // Interaction with ammo box
-        if (!isDowned && isNearAmmoBox && Input.GetKeyDown(KeyCode.E)) {
-            if (currentAmmoBox != null) {
-                currentAmmoBox.ClaimAmmo();
+            // Interaction with ammo box
+            if (isNearAmmoBox && Input.GetKeyDown(KeyCode.E)) {
+                if (currentAmmoBox != null) {
+                    currentAmmoBox.ClaimAmmo();
+                }
+            }
+            
+            // Handle player health
+            if (currentHealth <= 0) {
+                Die(); // Player is dead if health drops to or below zero
             }
         }
 
-        // Handle player health
-        if (!isDowned && currentHealth <= 0) {
-            Die(); // Player is dead if health drops to or below zero
-        }
 
         // Right-click to use the equipped medkit
-        if (isEquippedMedkit && Input.GetMouseButtonDown(1)) {
-            UseMedkit();
+       if (isEquippedMedkit && Input.GetMouseButtonDown(1)) {
+           UseMedkit();
         }
     }
 
@@ -108,9 +108,9 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void SwitchWeapon(int weaponIndex) {
-        // Disable all weapons
+      // Disable all weapons
         for (int i = 0; i < availableWeapons.Count; i++) {
-            availableWeapons[i].SetActive(false);
+           availableWeapons[i].SetActive(false);
         }
 
         // Enable the selected weapon
@@ -140,7 +140,7 @@ public class PlayerController : MonoBehaviour {
     public void Revive() {
         isDowned = false; // Set the player back to normal state
         currentHealth = health; // Set the health back to maximum or any other value you prefer for revival
-    }
+        }
 
     public int CheckPickup() {
         weaponTotal = 0;
@@ -161,7 +161,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void SwapWeapon(int weaponIndex, GameObject weapon, GameObject weaponPickup) {
-        weapons[weaponIndex] = null;
+       weapons[weaponIndex] = null;
         weapons[weaponIndex] = weapon;
         Destroy(weaponPickup);
         //Update visuals
@@ -173,7 +173,7 @@ public class PlayerController : MonoBehaviour {
             availableWeapons[weaponIndex].SetActive(true);
 
             // Update the current weapon index to the picked up weapon
-            currentWeapon = weaponIndex;
+           currentWeapon = weaponIndex;
         }
     }
 
@@ -203,7 +203,7 @@ public class PlayerController : MonoBehaviour {
             // Remove the equipped medkit.
             isEquippedMedkit = false;
             Destroy(equippedMedkit);
-            
+
         }
     }
 }
