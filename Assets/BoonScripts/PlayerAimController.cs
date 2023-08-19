@@ -4,44 +4,31 @@ public class PlayerAimController : MonoBehaviour {
     public enum InputType { Mouse, PS4RightStick }
     public InputType inputType = InputType.Mouse;
     public GameObject crossHair;
-    public float sensitivity = 5.0f; // Sensitivity factor
-    public float rotationSpeed = 5.0f; // Rotation speed for smoothness
+    public float sensitivity = 5.0f;
+    public float rotationSpeed = 5.0f;
 
-    // Reference to the canvas RectTransform of the crosshair
     private RectTransform crosshairRectTransform;
-
     private float initialXRotation;
 
     void Start() {
-        // Get the RectTransform of the crosshair
         crosshairRectTransform = crossHair.GetComponent<RectTransform>();
-
-        // Store the initial X rotation of the player
         initialXRotation = transform.rotation.eulerAngles.x;
     }
 
     void Update() {
-        // Check if the input type is Mouse
         if (inputType == InputType.Mouse) {
-            // Calculate the position for the crosshair based on the mouse position
             Vector3 mousePosition = Input.mousePosition;
             crosshairRectTransform.position = mousePosition;
 
-            // Convert the mouse position to a world point
+            // Convert the mouse position to a world point at a fixed distance (e.g., 10 units)
             Vector3 targetWorldPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, 10f));
 
-            // Calculate the aim direction
-            Vector3 aimDirection = targetWorldPosition - transform.position;
-            aimDirection.y = 0f; // Keep the player upright
+            // Use Transform.LookAt to directly face the crosshair's world position
+            transform.LookAt(targetWorldPosition);
 
-            // Calculate the Y rotation (yaw) based on the aim direction
-            float yRotation = Mathf.Atan2(aimDirection.x, aimDirection.z) * Mathf.Rad2Deg;
-
-            // Create the target rotation
-            Quaternion targetRotation = Quaternion.Euler(initialXRotation, yRotation, transform.rotation.eulerAngles.z);
-
-            // Smoothly interpolate between the current rotation and the target rotation
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            // To keep the player upright, reset the X rotation to the initial value
+            Vector3 currentRotation = transform.rotation.eulerAngles;
+            transform.rotation = Quaternion.Euler(initialXRotation, currentRotation.y, currentRotation.z);
         }
     }
 }
