@@ -6,6 +6,7 @@ public class GrenadeThrower : MonoBehaviour {
     public GameObject grenadePrefab; // grenade prefab that will be thrown
     public int maxGrenadeCount = 3; // maximum number of grenades the player can throw
     public float throwForceMultiplier = 20f; // Multiplier to control the throw force (Increase this value to throw further)
+    public float throwCurve = 1.0f; // Amount of curve to apply to the throw (adjust as needed)
     private int grenadeCount = 0; // current number of grenades thrown
 
     // Update is called once per frame
@@ -16,7 +17,7 @@ public class GrenadeThrower : MonoBehaviour {
     }
 
     void ThrowGrenade() {
-        // Instantiate the grenade at the spawn point position and rotation
+        // Instantiate the grenade at the spawn point position
         GameObject grenade = Instantiate(grenadePrefab, transform.position, Quaternion.identity);
 
         // Get the Rigidbody component of the grenade (make sure it has one)
@@ -29,11 +30,12 @@ public class GrenadeThrower : MonoBehaviour {
         Vector3 playerInputDirection = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
         playerInputDirection = playerInputDirection.normalized;
 
-        // Convert the input direction to the world space (relative to the player's rotation)
-        Vector3 throwDirection = transform.TransformDirection(playerInputDirection);
-
         // Apply the force in the calculated direction
-        rb.AddForce(throwDirection * throwForce, ForceMode.Impulse);
+        rb.AddForce(playerInputDirection * throwForce, ForceMode.Impulse);
+
+        // Calculate a consistent rotation for the grenade based on the throwCurve
+        Quaternion throwRotation = Quaternion.LookRotation(playerInputDirection + Vector3.up * throwCurve);
+        rb.MoveRotation(throwRotation);
 
         grenadeCount++; // Increment the grenade count
     }
