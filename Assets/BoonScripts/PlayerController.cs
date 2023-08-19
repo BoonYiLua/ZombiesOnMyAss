@@ -17,9 +17,11 @@ public class PlayerController : MonoBehaviour {
     private bool switchCooldown;
     public int weaponTotal;
 
+    private int grenadeCount = 0;
+
     private bool isDowned = false; // Indicates whether the player is in a downed state or not
 
-     Animator PlayerMovement;
+    Animator PlayerMovement;
 
     [Header("Player Health")]
     public int maxHealth = 100;
@@ -31,8 +33,8 @@ public class PlayerController : MonoBehaviour {
     private void Awake() {
         rb = GetComponent<Rigidbody>();
         currentHealth = health; // Initialize the current health to the maximum health on Awake
-        //InitializeWeapons();
-        
+                                //InitializeWeapons();
+
     }
 
     private void Start() {
@@ -50,28 +52,28 @@ public class PlayerController : MonoBehaviour {
 
     private void Update() {
 
-       // Check if the player is grounded
-       isGrounded = Physics.CheckSphere(groundCheck.position, 0.1f, groundLayer);
+        // Check if the player is grounded
+        isGrounded = Physics.CheckSphere(groundCheck.position, 0.1f, groundLayer);
 
-       // Player movement
-      if (!isDowned) {
+        // Player movement
+        if (!isDowned) {
             float horizontalInput = Input.GetAxis("Horizontal");
-          float verticalInput = Input.GetAxis("Vertical");
-          PlayerMovement.SetFloat("MoveX", horizontalInput);
-           PlayerMovement.SetFloat("MoveY", verticalInput);
-           Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput) * movementSpeed;
-          movement.y = rb.velocity.y; // Preserve the current vertical velocity
+            float verticalInput = Input.GetAxis("Vertical");
+            PlayerMovement.SetFloat("MoveX", horizontalInput);
+            PlayerMovement.SetFloat("MoveY", verticalInput);
+            Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput) * movementSpeed;
+            movement.y = rb.velocity.y; // Preserve the current vertical velocity
             rb.velocity = movement;
 
-          // Weapon switch
-          if (Input.GetAxisRaw("Mouse ScrollWheel") != 0) {
+            // Weapon switch
+            if (Input.GetAxisRaw("Mouse ScrollWheel") != 0) {
                 if (switchCooldown) return;
                 switchCooldown = true;
                 currentWeapon += (int)Mathf.Sign(Input.GetAxisRaw("Mouse ScrollWheel"));
                 currentWeapon = Mathf.Clamp(currentWeapon, 0, availableWeapons.Count - 1);
                 SwitchWeapon(currentWeapon);
                 StartCoroutine(waitSwitch());
-          }
+            }
 
             // Interaction with ammo box
             if (isNearAmmoBox && Input.GetKeyDown(KeyCode.E)) {
@@ -79,7 +81,7 @@ public class PlayerController : MonoBehaviour {
                     currentAmmoBox.ClaimAmmo();
                 }
             }
-            
+
             // Handle player health
             if (currentHealth <= 0) {
                 Die(); // Player is dead if health drops to or below zero
@@ -88,8 +90,8 @@ public class PlayerController : MonoBehaviour {
 
 
         // Right-click to use the equipped medkit
-       if (isEquippedMedkit && Input.GetMouseButtonDown(1)) {
-           UseMedkit();
+        if (isEquippedMedkit && Input.GetMouseButtonDown(1)) {
+            UseMedkit();
         }
     }
 
@@ -108,9 +110,9 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void SwitchWeapon(int weaponIndex) {
-      // Disable all weapons
+        // Disable all weapons
         for (int i = 0; i < availableWeapons.Count; i++) {
-           availableWeapons[i].SetActive(false);
+            availableWeapons[i].SetActive(false);
         }
 
         // Enable the selected weapon
@@ -140,7 +142,7 @@ public class PlayerController : MonoBehaviour {
     public void Revive() {
         isDowned = false; // Set the player back to normal state
         currentHealth = health; // Set the health back to maximum or any other value you prefer for revival
-        }
+    }
 
     public int CheckPickup() {
         weaponTotal = 0;
@@ -159,9 +161,12 @@ public class PlayerController : MonoBehaviour {
             Destroy(weaponPickup);
         }
     }
+    public void AddGrenade() {
+        grenadeCount++;
+    }
 
     public void SwapWeapon(int weaponIndex, GameObject weapon, GameObject weaponPickup) {
-       weapons[weaponIndex] = null;
+        weapons[weaponIndex] = null;
         weapons[weaponIndex] = weapon;
         Destroy(weaponPickup);
         //Update visuals
@@ -173,7 +178,7 @@ public class PlayerController : MonoBehaviour {
             availableWeapons[weaponIndex].SetActive(true);
 
             // Update the current weapon index to the picked up weapon
-           currentWeapon = weaponIndex;
+            currentWeapon = weaponIndex;
         }
     }
 
@@ -197,13 +202,20 @@ public class PlayerController : MonoBehaviour {
     public void UseMedkit() {
         // Ensure the player can't use the medkit while in a downed state or at full health.
         if (!isDowned && currentHealth < maxHealth) {
-            // Heal the player by the medkit's heal amount.
-            currentHealth = Mathf.Min(currentHealth + equippedMedkit.GetComponent<Medkit>().healAmount, maxHealth);
+            int healAmount = equippedMedkit.GetComponent<Medkit>().healAmount;
+
+            // Calculate how much the player can be healed without exceeding the maximum health.
+            int potentialHealth = currentHealth + healAmount;
+            if (potentialHealth > maxHealth) {
+                healAmount = maxHealth - currentHealth;
+            }
+
+            // Heal the player by the calculated heal amount.
+            currentHealth += healAmount;
 
             // Remove the equipped medkit.
             isEquippedMedkit = false;
             Destroy(equippedMedkit);
-
         }
     }
 }

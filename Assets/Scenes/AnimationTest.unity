@@ -147,20 +147,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!136 &62052853
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 62052848}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.43161377
-  m_Height: 1.8932726
-  m_Direction: 2
-  m_Center: {x: 0.0033126473, y: 0.28504366, z: 0.86963284}
 --- !u!1 &1401038500
 GameObject:
   m_ObjectHideFlags: 0
@@ -319,6 +305,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
+--- !u!136 &1555699038
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1555699032}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.43161377
+  m_Height: 1.8932726
+  m_Direction: 1
+  m_Center: {x: 0.02, y: 0.9, z: -0.39}
 --- !u!1001 &1726301396
 PrefabInstance:
   m_ObjectHideFlags: 0

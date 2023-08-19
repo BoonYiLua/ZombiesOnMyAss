@@ -8,8 +8,6 @@ public class GrenadeThrower : MonoBehaviour {
     public float throwForceMultiplier = 20f; // Multiplier to control the throw force (Increase this value to throw further)
     private int grenadeCount = 0; // current number of grenades thrown
 
-    public Transform grenadeSpawnPoint; // Reference to the GameObject representing the position from where grenades are thrown
-
     // Update is called once per frame
     void Update() {
         if (Input.GetKeyDown(KeyCode.Q) && grenadeCount < maxGrenadeCount) {
@@ -19,7 +17,7 @@ public class GrenadeThrower : MonoBehaviour {
 
     void ThrowGrenade() {
         // Instantiate the grenade at the spawn point position and rotation
-        GameObject grenade = Instantiate(grenadePrefab, grenadeSpawnPoint.position, Quaternion.identity);
+        GameObject grenade = Instantiate(grenadePrefab, transform.position, Quaternion.identity);
 
         // Get the Rigidbody component of the grenade (make sure it has one)
         Rigidbody rb = grenade.GetComponent<Rigidbody>();
@@ -27,8 +25,12 @@ public class GrenadeThrower : MonoBehaviour {
         // Set a constant throw force value (e.g., 3.5f) multiplied by the throwForceMultiplier
         float throwForce = 3.5f * throwForceMultiplier;
 
-        // Get the throw direction based on the rotation of GrenadePos
-        Vector3 throwDirection = grenadeSpawnPoint.forward;
+        // Get the player's input direction
+        Vector3 playerInputDirection = new Vector3(Input.GetAxis("Horizontal"), 0f, Input.GetAxis("Vertical"));
+        playerInputDirection = playerInputDirection.normalized;
+
+        // Convert the input direction to the world space (relative to the player's rotation)
+        Vector3 throwDirection = transform.TransformDirection(playerInputDirection);
 
         // Apply the force in the calculated direction
         rb.AddForce(throwDirection * throwForce, ForceMode.Impulse);

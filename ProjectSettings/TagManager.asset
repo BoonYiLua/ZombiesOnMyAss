@@ -10,6 +10,7 @@ TagManager:
   - AmmoBox
   - WeaponPickup
   - Zombie
+  - Grenade
   layers:
   - Default
   - TransparentFX
@@ -17,7 +18,7 @@ TagManager:
   - Ground
   - Water
   - UI
-  - 
+  - Grenade
   - 
   - 
   - 
