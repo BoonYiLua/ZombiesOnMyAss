@@ -6,9 +6,12 @@ public class PlayerAimController : MonoBehaviour {
     public GameObject crossHair;
     public float sensitivity = 5.0f;
     public float rotationSpeed = 5.0f;
+    public float smoothFactor = 0.1f;
 
     private RectTransform crosshairRectTransform;
+
     private float initialXRotation;
+    private Quaternion targetRotation = Quaternion.identity;
 
     void Start() {
         crosshairRectTransform = crossHair.GetComponent<RectTransform>();
@@ -20,15 +23,20 @@ public class PlayerAimController : MonoBehaviour {
             Vector3 mousePosition = Input.mousePosition;
             crosshairRectTransform.position = mousePosition;
 
-            // Convert the mouse position to a world point at a fixed distance (e.g., 10 units)
-            Vector3 targetWorldPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, 10f));
+            // Create a ray from the camera to the mouse position
+            Ray ray = Camera.main.ScreenPointToRay(mousePosition);
+            RaycastHit hit;
 
-            // Use Transform.LookAt to directly face the crosshair's world position
-            transform.LookAt(targetWorldPosition);
+            // Check if the ray hits something in the scene
+            if (Physics.Raycast(ray, out hit, 100)) {
+                // Calculate the target rotation to look at the hit point while preserving the initial X rotation
+                Vector3 targetPoint = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+                targetRotation = Quaternion.LookRotation(targetPoint - transform.position);
+                targetRotation.eulerAngles = new Vector3(initialXRotation, targetRotation.eulerAngles.y, targetRotation.eulerAngles.z);
+            }
 
-            // To keep the player upright, reset the X rotation to the initial value
-            Vector3 currentRotation = transform.rotation.eulerAngles;
-            transform.rotation = Quaternion.Euler(initialXRotation, currentRotation.y, currentRotation.z);
+            // Smoothly interpolate between the current rotation and the target rotation with the smoothFactor
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
         }
     }
 }
