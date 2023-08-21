@@ -29,7 +29,7 @@ public class RocketAmmo : MonoBehaviour {
 
             // If the zombie has a ZombieController component, deal damage to them
             if (zombieController != null) {
-                zombieController.TakeDamage(damageAmount);
+                //zombieController.TakeDamage(damageAmount);
             }
 
             // Create an explosion effect at the collision point

@@ -43,8 +43,12 @@ public class Grenade : MonoBehaviour {
             // Check if the collider belongs to a zombie
             ZombieController zombieController = hitCollider.GetComponent<ZombieController>();
             if (zombieController != null) {
+                // Calculate the damage based on the distance from the explosion point.
+                float distance = Vector3.Distance(transform.position, hitCollider.transform.position);
+                int damageToDeal = Mathf.RoundToInt(explosionDamage * (1 - distance / explosionRadius));
+
                 // Deal damage to the zombie
-                zombieController.TakeDamage(explosionDamage);
+                zombieController.TakeDamage(damageToDeal, transform.position);
             }
         }
 

@@ -834,6 +834,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 40
   attackDamage: 20
+  damageParticlesPrefab: {fileID: 1833647516323130222, guid: 434c5a532cdf2c74981f1ed9e126a998, type: 3}
 --- !u!136 &517459341
 CapsuleCollider:
   m_ObjectHideFlags: 0
