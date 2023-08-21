@@ -8,6 +8,7 @@ public class Grenade : MonoBehaviour {
     public float explosionDelay = 3f; // Delay in seconds before the grenade explodes
     public float explosionRadius = 5f; // Radius of the explosion
     public float explosionForce = 500f; // Force of the explosion
+    public int explosionDamage = 50; // Damage to apply to zombies within the explosion radius
 
     private bool hasExploded = false;
 
@@ -37,6 +38,13 @@ public class Grenade : MonoBehaviour {
             Rigidbody rb = hitCollider.GetComponent<Rigidbody>();
             if (rb != null) {
                 rb.AddExplosionForce(explosionForce, transform.position, explosionRadius);
+            }
+
+            // Check if the collider belongs to a zombie
+            ZombieController zombieController = hitCollider.GetComponent<ZombieController>();
+            if (zombieController != null) {
+                // Deal damage to the zombie
+                zombieController.TakeDamage(explosionDamage);
             }
         }
 

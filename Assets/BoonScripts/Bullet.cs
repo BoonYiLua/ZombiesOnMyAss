@@ -12,10 +12,7 @@ public class Bullet : MonoBehaviour {
     }
 
     void OnCollisionEnter(Collision other) {
-        // Check if the bullet collides with any other collider.
-        // You can use tags or layers to specify which objects you want the bullet to interact with.
-
-        // In this example, we are checking if the other collider is tagged as "Zombie".
+       
         if (other.gameObject.CompareTag("Zombie")) {
             // Get the ZombieController component of the zombie
             ZombieController zombieController = other.gameObject.GetComponent<ZombieController>();

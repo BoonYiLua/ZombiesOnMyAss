@@ -296,9 +296,9 @@ MonoBehaviour:
   firePoint: {fileID: 2857859348684646720}
   magazineSize: 100
   maxAmmo: 300
-  fireRate: 4
+  fireRate: 3
   reloadTime: 1.5
-  bulletSpeed: 20
+  bulletSpeed: 15
   bulletsPerShot: 1
   currentAmmo: 0
   currentMagazineAmmo: 0

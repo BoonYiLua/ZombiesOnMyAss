@@ -3020,7 +3020,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5371163176508106489, guid: d1e093350d7a0204cb1eb6333b5d0d6f, type: 3}
       propertyPath: rotationSpeed
-      value: 20
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5371163176508106489, guid: d1e093350d7a0204cb1eb6333b5d0d6f, type: 3}
       propertyPath: zAxisDistance
@@ -3092,7 +3092,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5371163177814628429, guid: d1e093350d7a0204cb1eb6333b5d0d6f, type: 3}
       propertyPath: throwCurve
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5371163177814628429, guid: d1e093350d7a0204cb1eb6333b5d0d6f, type: 3}
       propertyPath: throwTarget
@@ -3104,7 +3104,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5371163177814628429, guid: d1e093350d7a0204cb1eb6333b5d0d6f, type: 3}
       propertyPath: throwForceMultiplier
-      value: 3.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5371163177814628430, guid: d1e093350d7a0204cb1eb6333b5d0d6f, type: 3}
       propertyPath: m_LocalPosition.x
