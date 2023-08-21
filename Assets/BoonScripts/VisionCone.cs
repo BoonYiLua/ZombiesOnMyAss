@@ -4,6 +4,8 @@ public class VisionCone : MonoBehaviour {
     public float viewDistance = 10f;        // How far the cone can "see"
     [Range(1f, 180f)]
     public float viewAngle = 60f;           // The cone's field of view angle (1-180 degrees)
+    [Range(0f, 1f)]
+    public float opacity = 0.5f;            // Opacity of the vision cone (0-1)
     public Material visionMaterial;         // The material for the vision cone
 
     private MeshRenderer visionRenderer;    // Renderer for the vision cone
@@ -25,8 +27,10 @@ public class VisionCone : MonoBehaviour {
         visionMesh = CreateVisionConeMesh(viewDistance, viewAngle);
 
         // Assign the material to the mesh renderer
-        if (visionMaterial != null)
+        if (visionMaterial != null) {
             visionRenderer.material = visionMaterial;
+            SetOpacity(opacity);
+        }
 
         // Set the mesh for rendering
         visionMeshFilter.mesh = visionMesh;
@@ -60,5 +64,11 @@ public class VisionCone : MonoBehaviour {
         mesh.triangles = triangles;
 
         return mesh;
+    }
+
+    private void SetOpacity(float alpha) {
+        Color color = visionRenderer.material.color;
+        color.a = alpha;
+        visionRenderer.material.color = color;
     }
 }

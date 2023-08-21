@@ -623,7 +623,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 438309525}
   m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
-  m_LocalPosition: {x: -0.0013, y: 0.0376, z: -0.171}
+  m_LocalPosition: {x: 0.004, y: 0.009, z: -0.088}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 620945174}
@@ -642,9 +642,9 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 2
-  m_Range: 3
-  m_SpotAngle: 49.6
-  m_InnerSpotAngle: 8.1
+  m_Range: 2
+  m_SpotAngle: 149.5
+  m_InnerSpotAngle: 7
   m_CookieSize: 10
   m_Shadows:
     m_Type: 1
@@ -1629,8 +1629,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d156743a774c1d04c961e51903136228, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewDistance: 2
+  viewDistance: 2.5
   viewAngle: 90
+  opacity: 0.112
   visionMaterial: {fileID: 2100000, guid: 037ef2aa6c777384da165b210eb53b93, type: 2}
 --- !u!23 &1116191936
 MeshRenderer:
