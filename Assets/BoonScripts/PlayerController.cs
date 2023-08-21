@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections; 
 
 public class PlayerController : MonoBehaviour {
     public float movementSpeed = 5f;
@@ -17,9 +18,10 @@ public class PlayerController : MonoBehaviour {
     private bool switchCooldown;
     public int weaponTotal;
 
-    private int grenadeCount = 0;
+    public int grenadeCount = 0;
 
-    private bool isDowned = false; // Indicates whether the player is in a downed state or not
+    public bool isDowned = false; // Indicates whether the player is in a downed state or not
+    public float reviveDelay = 20f; // Time in seconds before the player revives
 
     Animator PlayerMovement;
 
@@ -134,14 +136,23 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+
+    private IEnumerator DownedCoroutine() {
+        isDowned = true; // Set the player to a downed state
+        yield return new WaitForSeconds(reviveDelay);
+        Revive(); // Revive the player after the delay
+    }
+
     private void Die() {
         // Add any actions you want to happen when the player dies, like game over, respawn, etc.
-        isDowned = true; // Set the player to a downed state
+        if (!isDowned) {
+            StartCoroutine(DownedCoroutine()); // Start the downed coroutine if not already downed
+        }
     }
 
     public void Revive() {
-        isDowned = false; // Set the player back to normal state
-        currentHealth = health; // Set the health back to maximum or any other value you prefer for revival
+        isDowned = false; // Set the player back to the normal state
+        currentHealth = Mathf.Min(maxHealth, currentHealth + 40); 
     }
 
     public int CheckPickup() {
