@@ -5,8 +5,10 @@ public class ZombieController : MonoBehaviour {
     public int attackDamage = 20; // Amount of damage the zombie deals to the player
     private int currentHealth;   // Current health of the zombie
 
+    Animator Zombie;
     private void Start() {
         currentHealth = maxHealth; // Initialize the zombie's health to its maximum value
+        Zombie = GetComponent<Animator>();
     }
 
     public void TakeDamage(int damageAmount) {
