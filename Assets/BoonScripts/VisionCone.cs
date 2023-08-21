@@ -1,71 +1,64 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class VisionCone : MonoBehaviour {
-    public Material VisionConeMaterial;
-    public float VisionRange;
-    public float VisionAngle;
-    public LayerMask VisionObstructingLayer;
-    public int VisionConeResolution = 120;
+    public float viewDistance = 10f;        // How far the cone can "see"
+    [Range(1f, 180f)]
+    public float viewAngle = 60f;           // The cone's field of view angle (1-180 degrees)
+    public Material visionMaterial;         // The material for the vision cone
 
-    MeshFilter meshFilter;
-    Mesh visionConeMesh;
+    private MeshRenderer visionRenderer;    // Renderer for the vision cone
+    private MeshFilter visionMeshFilter;    // Mesh filter for the vision cone
+    private Mesh visionMesh;                // Mesh data for the vision cone
 
-    void Start() {
-        // Ensure the GameObject has a MeshFilter component
-        meshFilter = gameObject.GetComponent<MeshFilter>();
-        if (meshFilter == null) {
-            meshFilter = gameObject.AddComponent<MeshFilter>();
-        }
+    private void Start() {
+        // Create or find a child GameObject to hold the vision cone mesh
+        GameObject coneMeshObject = new GameObject("VisionConeMesh");
+        coneMeshObject.transform.parent = transform;
+        coneMeshObject.transform.localPosition = Vector3.zero;
+        coneMeshObject.transform.localRotation = Quaternion.identity;
 
-        // Ensure the GameObject has a MeshRenderer component
-        MeshRenderer meshRenderer = gameObject.GetComponent<MeshRenderer>();
-        if (meshRenderer == null) {
-            meshRenderer = gameObject.AddComponent<MeshRenderer>();
-        }
+        // Add the necessary components for rendering
+        visionRenderer = coneMeshObject.AddComponent<MeshRenderer>();
+        visionMeshFilter = coneMeshObject.AddComponent<MeshFilter>();
 
-        meshRenderer.material = VisionConeMaterial;
+        // Create the vision cone mesh
+        visionMesh = CreateVisionConeMesh(viewDistance, viewAngle);
 
-        visionConeMesh = new Mesh();
-        VisionAngle *= Mathf.Deg2Rad;
+        // Assign the material to the mesh renderer
+        if (visionMaterial != null)
+            visionRenderer.material = visionMaterial;
+
+        // Set the mesh for rendering
+        visionMeshFilter.mesh = visionMesh;
     }
 
-    void Update() {
-        DrawVisionCone();
-    }
+    private Mesh CreateVisionConeMesh(float distance, float angle) {
+        Mesh mesh = new Mesh();
+        int segments = 30; // Number of segments to approximate the circle
 
-    void DrawVisionCone() {
-        int[] triangles = new int[VisionConeResolution * 3];
-        Vector3[] vertices = new Vector3[VisionConeResolution + 1];
-        vertices[0] = Vector3.zero;
-        float currentAngle = -VisionAngle / 2;
-        float angleIncrement = VisionAngle / (VisionConeResolution - 1);
+        Vector3[] vertices = new Vector3[segments + 2];
+        int[] triangles = new int[segments * 3];
 
-        for (int i = 0; i < VisionConeResolution; i++) {
-            float sine = Mathf.Sin(currentAngle);
-            float cosine = Mathf.Cos(currentAngle);
-            Vector3 raycastDirection = (transform.forward * cosine) + (transform.right * sine);
-            Vector3 vertForward = (Vector3.forward * cosine) + (Vector3.right * sine);
+        vertices[0] = Vector3.zero; // Cone tip
 
-            if (Physics.Raycast(transform.position, raycastDirection, out RaycastHit hit, VisionRange, VisionObstructingLayer)) {
-                vertices[i + 1] = vertForward * hit.distance;
-            } else {
-                vertices[i + 1] = vertForward * VisionRange;
+        float angleIncrement = angle / segments;
+
+        for (int i = 0; i <= segments; i++) {
+            float currentAngle = angleIncrement * i;
+            float x = Mathf.Sin(Mathf.Deg2Rad * currentAngle) * distance;
+            float y = Mathf.Cos(Mathf.Deg2Rad * currentAngle) * distance;
+            vertices[i + 1] = new Vector3(x, y, 0);
+
+            if (i < segments) {
+                triangles[i * 3] = 0;
+                triangles[i * 3 + 1] = i + 1;
+                triangles[i * 3 + 2] = i + 2;
             }
-
-            currentAngle += angleIncrement;
         }
 
-        for (int i = 0, j = 0; i < triangles.Length; i += 3, j++) {
-            triangles[i] = 0;
-            triangles[i + 1] = j + 1;
-            triangles[i + 2] = j + 2;
-        }
+        mesh.vertices = vertices;
+        mesh.triangles = triangles;
 
-        visionConeMesh.Clear();
-        visionConeMesh.vertices = vertices;
-        visionConeMesh.triangles = triangles;
-        meshFilter.mesh = visionConeMesh;
+        return mesh;
     }
 }
