@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ZombieController : MonoBehaviour {
     public int maxHealth = 100; // Maximum health of the zombie
-    public int attackDamage = 20; // Amount of damage the zombie deals to the player
+    public int attackDamage = 10; // Amount of damage the zombie deals to the player
     private int currentHealth; // Current health of the zombie
 
     Animator Zombie;
