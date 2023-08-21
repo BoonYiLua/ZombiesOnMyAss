@@ -1,9 +1,10 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GunController : MonoBehaviour {
     public GameObject bulletPrefab;
-    public Transform firePoint;
+    public List<Transform> firePoints; // List of firepoints for the gun (optional)
     public int magazineSize = 10; // The maximum ammo capacity in the magazine.
     public int maxAmmo = 100; // The maximum total ammo.
     public float fireRate = 0.2f;
@@ -47,17 +48,19 @@ public class GunController : MonoBehaviour {
 
     private void Shoot() {
         if (currentMagazineAmmo > 0) {
-            // Instantiate the bullet prefab at the FirePoint position and rotation
-            GameObject newBullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+            foreach (Transform firePoint in firePoints) {
+                // Instantiate the bullet prefab at the FirePoint position and rotation
+                GameObject newBullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
 
-            // Get the Rigidbody component of the bullet.
-            Rigidbody bulletRigidbody = newBullet.GetComponent<Rigidbody>();
+                // Get the Rigidbody component of the bullet.
+                Rigidbody bulletRigidbody = newBullet.GetComponent<Rigidbody>();
 
-            // Calculate the direction to shoot (straight, in front)
-            Vector3 shootDirection = firePoint.forward;
+                // Calculate the direction to shoot (straight, in front)
+                Vector3 shootDirection = firePoint.forward;
 
-            // Add a force to the bullet to move it in the calculated direction with a certain speed.
-            bulletRigidbody.AddForce(shootDirection * bulletSpeed, ForceMode.VelocityChange);
+                // Add a force to the bullet to move it in the calculated direction with a certain speed.
+                bulletRigidbody.AddForce(shootDirection * bulletSpeed, ForceMode.VelocityChange);
+            }
 
             // Reduce ammo from the magazine
             currentMagazineAmmo--;

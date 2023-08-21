@@ -293,7 +293,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 3326102556386387267, guid: cd2c7148d122fc4429924f192a99f374, type: 3}
-  firePoint: {fileID: 2857859348684646720}
+  firePoints:
+  - {fileID: 2857859348684646720}
   magazineSize: 100
   maxAmmo: 300
   fireRate: 3
