@@ -33,13 +33,13 @@ public class PlayerController : MonoBehaviour {
     private int medkitCount = 1; // Number of available medkits
 
     private void Awake() {
-        rb = GetComponent<Rigidbody>();
         currentHealth = health; // Initialize the current health to the maximum health on Awake
                                 //InitializeWeapons();
 
     }
 
     private void Start() {
+        rb = GetComponent<Rigidbody>();
         currentHealth = health;
         PlayerMovement = GetComponent<Animator>();
     }
@@ -61,11 +61,14 @@ public class PlayerController : MonoBehaviour {
         if (!isDowned) {
             float horizontalInput = Input.GetAxis("Horizontal");
             float verticalInput = Input.GetAxis("Vertical");
+            Debug.Log(horizontalInput); 
+            Debug.Log(verticalInput);
             PlayerMovement.SetFloat("MoveX", horizontalInput);
             PlayerMovement.SetFloat("MoveY", verticalInput);
-            Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput) * movementSpeed;
+            Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput);
             movement.y = rb.velocity.y; // Preserve the current vertical velocity
-            rb.velocity = movement;
+            Debug.Log(movementSpeed);
+            rb.velocity = movement*movementSpeed;
 
             // Weapon switch
             if (Input.GetAxisRaw("Mouse ScrollWheel") != 0) {
