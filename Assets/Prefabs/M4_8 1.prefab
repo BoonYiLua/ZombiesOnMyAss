@@ -295,11 +295,11 @@ MonoBehaviour:
   bulletPrefab: {fileID: 3326102556386387267, guid: cd2c7148d122fc4429924f192a99f374, type: 3}
   firePoints:
   - {fileID: 2857859348684646720}
-  magazineSize: 100
-  maxAmmo: 300
-  fireRate: 3
+  magazineSize: 50
+  maxAmmo: 200
+  fireRate: 2
   reloadTime: 1.5
-  bulletSpeed: 15
+  bulletSpeed: 8
   bulletsPerShot: 1
   currentAmmo: 0
   currentMagazineAmmo: 0

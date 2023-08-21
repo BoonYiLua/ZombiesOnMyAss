@@ -15,8 +15,8 @@ public class MedkitPickup : MonoBehaviour {
 
     private void OnTriggerEnter(Collider collision) {
         if (collision.gameObject.CompareTag("Player")) {
-            // Use the playerController reference to call the PickupMedkit method
-            if (playerController != null) {
+            // Check if the player's health is less than maxHealth before allowing pickup
+            if (playerController != null && playerController.currentHealth < playerController.maxHealth) {
                 playerController.PickupMedkit(healAmount, medkitPrefab, gameObject);
             }
         }

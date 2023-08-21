@@ -197,16 +197,19 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void PickupMedkit(int healAmount, GameObject medkitObject, GameObject pickupObject) {
-        if (!isEquippedMedkit && medkitCount > 0) {
+        if (!isEquippedMedkit && medkitCount > 0 && currentHealth < maxHealth) {
             isEquippedMedkit = true;
             equippedMedkit = medkitObject;
             medkitCount--;
 
-            // Show some visual indicator that the player has the medkit equipped (e.g., highlight the medkit object)
-            // For example, you can change the medkit's material or add some glowing effect.
 
-            // Add the heal amount to the current health but make sure it doesn't exceed the maximum health.
-            currentHealth = Mathf.Min(currentHealth + healAmount, maxHealth);
+            int potentialHealth = currentHealth + healAmount;
+            if (potentialHealth > maxHealth) {
+                healAmount = maxHealth - currentHealth;
+            }
+            
+            // Add the heal amount to the current health.
+            currentHealth += healAmount;
 
             // Destroy the medkit since it's been used.
             Destroy(pickupObject);
