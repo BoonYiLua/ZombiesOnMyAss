@@ -4,17 +4,26 @@ using UnityEngine;
 
 public class GrenadeThrower : MonoBehaviour {
     public GameObject grenadePrefab; // Grenade prefab that will be thrown
-    public int maxGrenadeCount = 3; // Maximum number of grenades the player can throw
+    public int maxGrenadeCount = 3; // Maximum number of grenades the player can hold
     public float throwForceMultiplier = 20f; // Multiplier to control the throw force (Increase this value to throw further)
     public float throwCurve = 1.0f; // Amount of curve to apply to the throw (adjust as needed)
-    private int grenadeCount = 0; // Current number of grenades thrown
+    public int grenadeCount = 0; // Current number of grenades held
     public GameObject throwTarget; // The target GameObject to determine the throw direction
 
     // Update is called once per frame
     void Update() {
-        if (Input.GetKeyDown(KeyCode.Q) && grenadeCount < maxGrenadeCount) {
+        if (Input.GetKeyDown(KeyCode.Q) && grenadeCount > 0) {
             ThrowGrenade();
         }
+    }
+
+    public void PickupGrenade() {
+        grenadeCount += 1;
+    }
+
+
+    public int GrenadeCount {
+        get { return grenadeCount; }
     }
 
     void ThrowGrenade() {
@@ -43,6 +52,7 @@ public class GrenadeThrower : MonoBehaviour {
         Quaternion throwRotation = Quaternion.LookRotation(throwDirection + Vector3.up * throwCurve);
         rb.MoveRotation(throwRotation);
 
-        grenadeCount++; // Increment the grenade count
+        // Decrease the grenade count after throwing
+        grenadeCount--;
     }
 }

@@ -678,10 +678,10 @@ Light:
   m_InnerSpotAngle: 1
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 1
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
-    m_Strength: 0
+    m_Strength: 0.238
     m_Bias: 0.05
     m_NormalBias: 0.4
     m_NearPlane: 0.2
@@ -1587,6 +1587,19 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.07838227
   m_Center: {x: 0, y: 0.027264815, z: 0}
+--- !u!114 &1097174560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097174555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d044818d89f76c42a4ee543a04b0824, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grenadeThrower: {fileID: 1829357898}
 --- !u!54 &1097174561
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2151,6 +2164,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4709daa151745d54886e0f9148ff4a50, type: 3}
+--- !u!114 &1829357898 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5371163177814628429, guid: d1e093350d7a0204cb1eb6333b5d0d6f, type: 3}
+  m_PrefabInstance: {fileID: 5371163176380778199}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7902c51c332ea7d41805ac861a476596, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1949780087
 GameObject:
   m_ObjectHideFlags: 0
@@ -3057,6 +3081,14 @@ PrefabInstance:
       propertyPath: availableWeapons.Array.data[1]
       value: 
       objectReference: {fileID: 1467186463}
+    - target: {fileID: 5371163176866973154, guid: d1e093350d7a0204cb1eb6333b5d0d6f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.779
+      objectReference: {fileID: 0}
+    - target: {fileID: 5371163176866973154, guid: d1e093350d7a0204cb1eb6333b5d0d6f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.033
+      objectReference: {fileID: 0}
     - target: {fileID: 5371163176867404226, guid: d1e093350d7a0204cb1eb6333b5d0d6f, type: 3}
       propertyPath: m_TagString
       value: Untagged
@@ -3075,7 +3107,7 @@ PrefabInstance:
       objectReference: {fileID: 577720999}
     - target: {fileID: 5371163177814628429, guid: d1e093350d7a0204cb1eb6333b5d0d6f, type: 3}
       propertyPath: maxGrenadeCount
-      value: 60
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5371163177814628429, guid: d1e093350d7a0204cb1eb6333b5d0d6f, type: 3}
       propertyPath: throwForceMultiplier
