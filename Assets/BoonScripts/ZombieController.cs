@@ -48,17 +48,15 @@ public class ZombieController : MonoBehaviour {
     }
 
     private void Die() {
-        // Implement any death behavior for the zombie here.
-        // For example, play a death animation or destroy the zombie object.
-
-        // Destroy the particle effect when the zombie dies
-        if (damageParticles != null) {
-            Destroy(damageParticles.gameObject);
+        // Play the particle effect at the Zombie's position
+        if (damageParticlesPrefab != null) {
+            damageParticles = Instantiate(damageParticlesPrefab, transform.position, Quaternion.identity);
+            PlayDamageParticles();
         }
 
+        // Destroy the Zombie
         Destroy(gameObject);
     }
-
     private void OnCollisionEnter(Collision collision) {
         if (collision.gameObject.CompareTag("Player")) {
             // Get the PlayerController component of the player
