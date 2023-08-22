@@ -98,13 +98,14 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   weapons:
-  - {fileID: 0}
   - {fileID: 5371163176867404226}
   - {fileID: 5371163177635986376}
-  - {fileID: 0}
   health: 100
   availableWeapons: []
   weaponTotal: 0
+  grenadeCount: 0
+  isDowned: 0
+  reviveDelay: 20
   maxHealth: 100
   currentHealth: 0
 --- !u!114 &5371163176508106489
@@ -119,8 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d0cfd418ab97e144893a45b13fc6369, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputType: 0
-  sensitivity: 3.5
+  rotationSpeed: 5
 --- !u!137 &2048607603063263435
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -311,7 +311,9 @@ MonoBehaviour:
   grenadePrefab: {fileID: 7922488545162546894, guid: 3ca3b4b27c517cc41b91578fce8fcefa, type: 3}
   maxGrenadeCount: 99
   throwForceMultiplier: 3.5
-  grenadeSpawnPoint: {fileID: 5371163177814628430}
+  throwCurve: 1
+  grenadeCount: 0
+  throwTarget: {fileID: 0}
 --- !u!1001 &2975342620943339050
 PrefabInstance:
   m_ObjectHideFlags: 0

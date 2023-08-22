@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour {
     public GameObject[] weapons; // Array of weapon GameObjects
     public int health = 100; // Player's health
 
+    CharacterController character;
     private Rigidbody rb;
     private bool isGrounded;
     private bool isNearAmmoBox = false;
@@ -39,7 +40,8 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void Start() {
-        rb = GetComponent<Rigidbody>();
+        //rb = GetComponent<Rigidbody>();
+        character = GetComponent<CharacterController>();
         currentHealth = health;
         PlayerMovement = GetComponent<Animator>();
     }
@@ -59,16 +61,18 @@ public class PlayerController : MonoBehaviour {
 
         // Player movement
         if (!isDowned) {
-            float horizontalInput = Input.GetAxis("Horizontal");
-            float verticalInput = Input.GetAxis("Vertical");
-            Debug.Log(horizontalInput); 
-            Debug.Log(verticalInput);
+            float horizontalInput = Input.GetAxisRaw("Horizontal");
+            float verticalInput = Input.GetAxisRaw("Vertical");
             PlayerMovement.SetFloat("MoveX", horizontalInput);
             PlayerMovement.SetFloat("MoveY", verticalInput);
             Vector3 movement = new Vector3(horizontalInput, 0f, verticalInput);
-            movement.y = rb.velocity.y; // Preserve the current vertical velocity
-            Debug.Log(movementSpeed);
-            rb.velocity = movement*movementSpeed;
+            //movement.y = rb.velocity.y; // Preserve the current vertical velocity
+            //rb.velocity = movement*movementSpeed;
+            //Debug.Log(rb.velocity);
+            if(movement.magnitude >= 0.1f) {
+                Vector3 displacement = transform.TransformDirection(movement.normalized);
+                character.Move(movement * movementSpeed * Time.deltaTime);
+            }
 
             // Weapon switch
             if (Input.GetAxisRaw("Mouse ScrollWheel") != 0) {
