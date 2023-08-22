@@ -579,6 +579,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   attackDamage: 20
+  damageParticlesPrefab: {fileID: 1833647516323130222, guid: 434c5a532cdf2c74981f1ed9e126a998, type: 3}
 --- !u!54 &861754150
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -735,6 +736,9 @@ MonoBehaviour:
   health: 100
   availableWeapons: []
   weaponTotal: 0
+  grenadeCount: 0
+  isDowned: 0
+  reviveDelay: 20
   maxHealth: 100
   currentHealth: 0
 --- !u!114 &1555699036
@@ -749,11 +753,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d0cfd418ab97e144893a45b13fc6369, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputType: 0
-  crossHair: {fileID: 0}
-  sensitivity: 3.5
   rotationSpeed: 5
-  smoothFactor: 0.1
 --- !u!54 &1555699037
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -766,7 +766,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
