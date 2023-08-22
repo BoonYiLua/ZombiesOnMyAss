@@ -26,7 +26,7 @@ public class GrenadeThrower : MonoBehaviour {
         get { return grenadeCount; }
     }
 
-    void ThrowGrenade() {
+   public void ThrowGrenade() {
         // Ensure there is a target before throwing
         if (throwTarget == null) {
             Debug.LogWarning("Throw target not set.");

@@ -14,7 +14,7 @@ public class GunController : MonoBehaviour {
 
     [SerializeField] private int currentAmmo; // The current total ammo.
     [SerializeField] private int currentMagazineAmmo; // The current ammo in the magazine.
-    private bool isReloading = false;
+    public bool isReloading = false;
     private float nextFireTime = 0f;
 
     private void Start() {
@@ -32,11 +32,10 @@ public class GunController : MonoBehaviour {
         if (isReloading) {
             return;
         }
+        if (GetComponentInParent<PlayerController>().player.ToString() == "P1") {
+            if (Input.GetButton("Fire1")) {
+                Fire();
 
-        if (Input.GetButton("Fire1") && Time.time >= nextFireTime) {
-            nextFireTime = Time.time + .1f / fireRate;
-            for (int i = 0; i < bulletsPerShot; i++) {
-                Shoot();
             }
         }
 
@@ -45,7 +44,14 @@ public class GunController : MonoBehaviour {
             StartCoroutine(Reload());
         }
     }
-
+    public void Fire() {
+        if (Time.time >= nextFireTime) {
+            nextFireTime = Time.time + .1f / fireRate;
+            for (int i = 0; i < bulletsPerShot; i++) {
+                Shoot();
+            }
+        }
+    }
     private void Shoot() {
         if (currentMagazineAmmo > 0) {
             foreach (Transform firePoint in firePoints) {
@@ -67,7 +73,7 @@ public class GunController : MonoBehaviour {
         }
     }
 
-    private IEnumerator Reload() {
+    public IEnumerator Reload() {
         if (currentAmmo > 0 && currentMagazineAmmo < magazineSize) {
             isReloading = true;
 
