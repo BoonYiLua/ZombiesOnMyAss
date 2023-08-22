@@ -12,7 +12,7 @@ public class GrenadeThrower : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        if (Input.GetKeyDown(KeyCode.Q) && grenadeCount > 0) {
+        if (Input.GetKeyDown(KeyCode.Q)) {
             ThrowGrenade();
         }
     }
@@ -27,6 +27,7 @@ public class GrenadeThrower : MonoBehaviour {
     }
 
    public void ThrowGrenade() {
+        if (grenadeCount <= 0) return;
         // Ensure there is a target before throwing
         if (throwTarget == null) {
             Debug.LogWarning("Throw target not set.");

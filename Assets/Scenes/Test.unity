@@ -2590,6 +2590,7 @@ GameObject:
   - component: {fileID: 2015421829}
   - component: {fileID: 2015421828}
   - component: {fileID: 2015421831}
+  - component: {fileID: 2015421832}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2696,6 +2697,21 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2015421832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2015421827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0.08018869, g: 0.76227474, b: 1, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!1001 &2031395574
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3139,8 +3155,20 @@ MonoBehaviour:
     m_ActionName: Gameplay/Rotate[/DualShock4GamepadHID/rightStick/down,/DualShock4GamepadHID/leftStick/up]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: ed056a25-f3f4-40ea-ad79-aae453b0adcf
-    m_ActionName: Gameplay/Interact[/DualShock4GamepadHID/buttonEast,/Keyboard/e]
+    m_ActionId: 0e525dee-69c4-439a-ba85-b9da878e8a8f
+    m_ActionName: Gameplay/Reload
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2a02aac8-9436-4736-bf3e-c7a4ae12a62e
+    m_ActionName: Gameplay/Grenade[/DualShock4GamepadHID/rightShoulder]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6b34c276-d4c2-4a08-b122-e0bc24574855
+    m_ActionName: Gameplay/Switcher[/DualShock4GamepadHID/buttonNorth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8a7c70bf-7a5e-4b7c-ac60-6b8e4b104692
+    m_ActionName: Gameplay/Ammo[/DualShock4GamepadHID/buttonEast]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay

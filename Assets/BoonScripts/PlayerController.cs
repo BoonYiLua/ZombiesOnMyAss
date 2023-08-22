@@ -59,6 +59,7 @@ public class PlayerController : MonoBehaviour {
             controls.Gameplay.Grenade.performed += ctx => GetComponentInChildren<GrenadeThrower>().ThrowGrenade();
             controls.Gameplay.Switcher.performed += ctx => switchWeapon = true;
             controls.Gameplay.Switcher.canceled += ctx => switchWeapon = false;
+            controls.Gameplay.Ammo.performed += ctx => availableWeapons[currentWeapon].GetComponent<GunController>().GetComponent<AmmoBox>().ClaimAmmo();
         }
     }
 

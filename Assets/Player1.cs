@@ -55,15 +55,6 @@ public partial class @Player1 : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Interact"",
-                    ""type"": ""Button"",
-                    ""id"": ""ed056a25-f3f4-40ea-ad79-aae453b0adcf"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Reload"",
                     ""type"": ""Button"",
                     ""id"": ""0e525dee-69c4-439a-ba85-b9da878e8a8f"",
@@ -85,6 +76,15 @@ public partial class @Player1 : IInputActionCollection2, IDisposable
                     ""name"": ""Switcher"",
                     ""type"": ""Button"",
                     ""id"": ""6b34c276-d4c2-4a08-b122-e0bc24574855"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Ammo"",
+                    ""type"": ""Button"",
+                    ""id"": ""8a7c70bf-7a5e-4b7c-ac60-6b8e4b104692"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -149,28 +149,6 @@ public partial class @Player1 : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""7fc888d3-cc03-4801-9100-37f10c74638f"",
-                    ""path"": ""<Gamepad>/buttonEast"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Interact"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""fd5f36bf-ad98-433a-891f-2f475d8d3b0c"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Interact"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""19ac0bd2-6369-44c2-a348-e6a5c8f81189"",
                     ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
@@ -201,6 +179,17 @@ public partial class @Player1 : IInputActionCollection2, IDisposable
                     ""action"": ""Switcher"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7ff6288d-b75f-4404-944d-0da8800002fc"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Ammo"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -212,10 +201,10 @@ public partial class @Player1 : IInputActionCollection2, IDisposable
         m_Gameplay_Movement = m_Gameplay.FindAction("Movement", throwIfNotFound: true);
         m_Gameplay_Fire = m_Gameplay.FindAction("Fire", throwIfNotFound: true);
         m_Gameplay_Rotate = m_Gameplay.FindAction("Rotate", throwIfNotFound: true);
-        m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
         m_Gameplay_Reload = m_Gameplay.FindAction("Reload", throwIfNotFound: true);
         m_Gameplay_Grenade = m_Gameplay.FindAction("Grenade", throwIfNotFound: true);
         m_Gameplay_Switcher = m_Gameplay.FindAction("Switcher", throwIfNotFound: true);
+        m_Gameplay_Ammo = m_Gameplay.FindAction("Ammo", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -278,10 +267,10 @@ public partial class @Player1 : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Movement;
     private readonly InputAction m_Gameplay_Fire;
     private readonly InputAction m_Gameplay_Rotate;
-    private readonly InputAction m_Gameplay_Interact;
     private readonly InputAction m_Gameplay_Reload;
     private readonly InputAction m_Gameplay_Grenade;
     private readonly InputAction m_Gameplay_Switcher;
+    private readonly InputAction m_Gameplay_Ammo;
     public struct GameplayActions
     {
         private @Player1 m_Wrapper;
@@ -289,10 +278,10 @@ public partial class @Player1 : IInputActionCollection2, IDisposable
         public InputAction @Movement => m_Wrapper.m_Gameplay_Movement;
         public InputAction @Fire => m_Wrapper.m_Gameplay_Fire;
         public InputAction @Rotate => m_Wrapper.m_Gameplay_Rotate;
-        public InputAction @Interact => m_Wrapper.m_Gameplay_Interact;
         public InputAction @Reload => m_Wrapper.m_Gameplay_Reload;
         public InputAction @Grenade => m_Wrapper.m_Gameplay_Grenade;
         public InputAction @Switcher => m_Wrapper.m_Gameplay_Switcher;
+        public InputAction @Ammo => m_Wrapper.m_Gameplay_Ammo;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -311,9 +300,6 @@ public partial class @Player1 : IInputActionCollection2, IDisposable
                 @Rotate.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRotate;
                 @Rotate.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRotate;
                 @Rotate.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnRotate;
-                @Interact.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnInteract;
-                @Interact.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnInteract;
-                @Interact.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnInteract;
                 @Reload.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnReload;
                 @Reload.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnReload;
                 @Reload.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnReload;
@@ -323,6 +309,9 @@ public partial class @Player1 : IInputActionCollection2, IDisposable
                 @Switcher.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSwitcher;
                 @Switcher.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSwitcher;
                 @Switcher.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnSwitcher;
+                @Ammo.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAmmo;
+                @Ammo.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAmmo;
+                @Ammo.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAmmo;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -336,9 +325,6 @@ public partial class @Player1 : IInputActionCollection2, IDisposable
                 @Rotate.started += instance.OnRotate;
                 @Rotate.performed += instance.OnRotate;
                 @Rotate.canceled += instance.OnRotate;
-                @Interact.started += instance.OnInteract;
-                @Interact.performed += instance.OnInteract;
-                @Interact.canceled += instance.OnInteract;
                 @Reload.started += instance.OnReload;
                 @Reload.performed += instance.OnReload;
                 @Reload.canceled += instance.OnReload;
@@ -348,6 +334,9 @@ public partial class @Player1 : IInputActionCollection2, IDisposable
                 @Switcher.started += instance.OnSwitcher;
                 @Switcher.performed += instance.OnSwitcher;
                 @Switcher.canceled += instance.OnSwitcher;
+                @Ammo.started += instance.OnAmmo;
+                @Ammo.performed += instance.OnAmmo;
+                @Ammo.canceled += instance.OnAmmo;
             }
         }
     }
@@ -357,9 +346,9 @@ public partial class @Player1 : IInputActionCollection2, IDisposable
         void OnMovement(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
         void OnRotate(InputAction.CallbackContext context);
-        void OnInteract(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
         void OnGrenade(InputAction.CallbackContext context);
         void OnSwitcher(InputAction.CallbackContext context);
+        void OnAmmo(InputAction.CallbackContext context);
     }
 }

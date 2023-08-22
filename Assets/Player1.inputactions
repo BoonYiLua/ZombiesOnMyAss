@@ -33,15 +33,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Interact",
-                    "type": "Button",
-                    "id": "ed056a25-f3f4-40ea-ad79-aae453b0adcf",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Reload",
                     "type": "Button",
                     "id": "0e525dee-69c4-439a-ba85-b9da878e8a8f",
@@ -63,6 +54,15 @@
                     "name": "Switcher",
                     "type": "Button",
                     "id": "6b34c276-d4c2-4a08-b122-e0bc24574855",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Ammo",
+                    "type": "Button",
+                    "id": "8a7c70bf-7a5e-4b7c-ac60-6b8e4b104692",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -127,28 +127,6 @@
                 },
                 {
                     "name": "",
-                    "id": "7fc888d3-cc03-4801-9100-37f10c74638f",
-                    "path": "<Gamepad>/buttonEast",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Interact",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "fd5f36bf-ad98-433a-891f-2f475d8d3b0c",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Interact",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "19ac0bd2-6369-44c2-a348-e6a5c8f81189",
                     "path": "<Gamepad>/buttonEast",
                     "interactions": "",
@@ -177,6 +155,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Switcher",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7ff6288d-b75f-4404-944d-0da8800002fc",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Ammo",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
