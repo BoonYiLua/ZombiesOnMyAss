@@ -33,6 +33,8 @@ public class PlayerController : MonoBehaviour {
 
     public int grenadeCount = 0;
 
+    private float initialYPosition;
+
     public bool isDowned = false; // Indicates whether the player is in a downed state or not
     public float reviveDelay = 20f; // Time in seconds before the player revives
 
@@ -70,6 +72,7 @@ public class PlayerController : MonoBehaviour {
         character = GetComponent<CharacterController>();
         currentHealth = health;
         PlayerMovement = GetComponent<Animator>();
+        initialYPosition = transform.position.y;
     }
 
     private void InitializeWeapons() {
@@ -84,6 +87,13 @@ public class PlayerController : MonoBehaviour {
 
         // Check if the player is grounded
         isGrounded = Physics.CheckSphere(groundCheck.position, 0.1f, groundLayer);
+
+
+        Vector3 newPosition = new Vector3(transform.position.x, initialYPosition, transform.position.z);
+
+        // Move the character to the new position
+        character.Move(newPosition - transform.position);
+
 
         // Player movement
         if (!isDowned) {
