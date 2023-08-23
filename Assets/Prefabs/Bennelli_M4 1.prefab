@@ -253,6 +253,7 @@ MonoBehaviour:
   bulletsPerShot: 1
   currentAmmo: 0
   currentMagazineAmmo: 0
+  isReloading: 0
 --- !u!1 &2877419984645458447
 GameObject:
   m_ObjectHideFlags: 0
