@@ -3856,7 +3856,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8213214458825390650, guid: d9c8fb79363873543ac3f297926425bd, type: 3}
       propertyPath: player
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8213214458825390650, guid: d9c8fb79363873543ac3f297926425bd, type: 3}
       propertyPath: groundCheck
