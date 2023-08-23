@@ -297,12 +297,13 @@ MonoBehaviour:
   - {fileID: 2857859348684646720}
   magazineSize: 50
   maxAmmo: 200
-  fireRate: 2
+  fireRate: 1
   reloadTime: 1.5
-  bulletSpeed: 8
+  bulletSpeed: 3
   bulletsPerShot: 1
   currentAmmo: 0
   currentMagazineAmmo: 0
+  isReloading: 0
 --- !u!1 &2857859350177743126
 GameObject:
   m_ObjectHideFlags: 0
