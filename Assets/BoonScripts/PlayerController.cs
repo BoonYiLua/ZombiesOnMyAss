@@ -114,6 +114,7 @@ public class PlayerController : MonoBehaviour {
                     currentWeapon += (int)Mathf.Sign(Input.GetAxisRaw("Mouse ScrollWheel"));
                 }
                 else if(player == Player.P2) {
+                    if (!switchWeapon) return;
                     currentWeapon += 1;
                     if(currentWeapon > availableWeapons.Count - 1) {
                         currentWeapon = 0;
