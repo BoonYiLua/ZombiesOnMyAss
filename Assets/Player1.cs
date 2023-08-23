@@ -89,6 +89,15 @@ public partial class @Player1 : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Teleport"",
+                    ""type"": ""Button"",
+                    ""id"": ""a3544f83-a481-44e5-bdb2-5ac3f9dbff9a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -190,6 +199,17 @@ public partial class @Player1 : IInputActionCollection2, IDisposable
                     ""action"": ""Ammo"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""051a252e-4f8c-4fc6-a6ef-7d59d2ea15bf"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Teleport"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -205,6 +225,7 @@ public partial class @Player1 : IInputActionCollection2, IDisposable
         m_Gameplay_Grenade = m_Gameplay.FindAction("Grenade", throwIfNotFound: true);
         m_Gameplay_Switcher = m_Gameplay.FindAction("Switcher", throwIfNotFound: true);
         m_Gameplay_Ammo = m_Gameplay.FindAction("Ammo", throwIfNotFound: true);
+        m_Gameplay_Teleport = m_Gameplay.FindAction("Teleport", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -271,6 +292,7 @@ public partial class @Player1 : IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Grenade;
     private readonly InputAction m_Gameplay_Switcher;
     private readonly InputAction m_Gameplay_Ammo;
+    private readonly InputAction m_Gameplay_Teleport;
     public struct GameplayActions
     {
         private @Player1 m_Wrapper;
@@ -282,6 +304,7 @@ public partial class @Player1 : IInputActionCollection2, IDisposable
         public InputAction @Grenade => m_Wrapper.m_Gameplay_Grenade;
         public InputAction @Switcher => m_Wrapper.m_Gameplay_Switcher;
         public InputAction @Ammo => m_Wrapper.m_Gameplay_Ammo;
+        public InputAction @Teleport => m_Wrapper.m_Gameplay_Teleport;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -312,6 +335,9 @@ public partial class @Player1 : IInputActionCollection2, IDisposable
                 @Ammo.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAmmo;
                 @Ammo.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAmmo;
                 @Ammo.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAmmo;
+                @Teleport.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTeleport;
+                @Teleport.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTeleport;
+                @Teleport.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnTeleport;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -337,6 +363,9 @@ public partial class @Player1 : IInputActionCollection2, IDisposable
                 @Ammo.started += instance.OnAmmo;
                 @Ammo.performed += instance.OnAmmo;
                 @Ammo.canceled += instance.OnAmmo;
+                @Teleport.started += instance.OnTeleport;
+                @Teleport.performed += instance.OnTeleport;
+                @Teleport.canceled += instance.OnTeleport;
             }
         }
     }
@@ -350,5 +379,6 @@ public partial class @Player1 : IInputActionCollection2, IDisposable
         void OnGrenade(InputAction.CallbackContext context);
         void OnSwitcher(InputAction.CallbackContext context);
         void OnAmmo(InputAction.CallbackContext context);
+        void OnTeleport(InputAction.CallbackContext context);
     }
 }

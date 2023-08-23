@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerController : MonoBehaviour {
     public float movementSpeed = 5f;
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour {
     float rotation;
     float rotationSpeed = 180f;
 
+    PlayerTeleportation tele;
     private Rigidbody rb;
     private bool isGrounded;
     private bool isNearAmmoBox = false;
@@ -60,6 +62,7 @@ public class PlayerController : MonoBehaviour {
             controls.Gameplay.Switcher.performed += ctx => switchWeapon = true;
             controls.Gameplay.Switcher.canceled += ctx => switchWeapon = false;
             controls.Gameplay.Ammo.performed += ctx => HandleAmmoInput();
+            controls.Gameplay.Teleport.performed += ctx => HandleTeleportInput(); // Add this line 
         }
     }
 
@@ -156,12 +159,18 @@ public class PlayerController : MonoBehaviour {
             isNearAmmoBox = true;
             currentAmmoBox = other.GetComponent<AmmoBox>();
         }
+        if (other.GetComponent<PlayerTeleportation>()) {
+            tele = other.GetComponent<PlayerTeleportation>();
+        }
     }
 
     private void OnTriggerExit(Collider other) {
         if (other.CompareTag("AmmoBox")) {
             isNearAmmoBox = false;
             currentAmmoBox = null;
+        }
+        if (other.GetComponent<PlayerTeleportation>()) {
+            tele = null;
         }
     }
     private void HandleAmmoInput() {
@@ -173,6 +182,7 @@ public class PlayerController : MonoBehaviour {
             }
         }
     }
+
     private void SwitchWeapon(int weaponIndex) {
         // Disable all weapons
         for (int i = 0; i < availableWeapons.Count; i++) {
@@ -254,7 +264,15 @@ public class PlayerController : MonoBehaviour {
             currentWeapon = weaponIndex;
         }
     }
-
+    private void HandleTeleportInput() {
+        // Your code to handle the Teleport action goes here
+        // For example, you can call GetComponent<PlayerTeleportation>().TeleportPlayer() here.
+        if (tele) {
+            if (tele.onTeleporter) {
+                tele.TeleportPlayer();
+            }
+        }
+    }
     public void PickupMedkit(int healAmount, GameObject medkitObject, GameObject pickupObject) {
         if (!isEquippedMedkit && medkitCount > 0 && currentHealth < maxHealth) {
             isEquippedMedkit = true;
@@ -306,4 +324,6 @@ public class PlayerController : MonoBehaviour {
             controls.Gameplay.Disable();
         }
     }
+
+
 }

@@ -36,11 +36,10 @@ public class PlayerTeleportation : MonoBehaviour {
 
     
 
-    private void TeleportPlayer() {
-        // Find the player using the "Player" tag.
+    public void TeleportPlayer() {
             
     
-        if (player != null) {
+        if (player != null && onTeleporter) {
       
             // Teleport the player to the target teleporter's position.
             player.GetComponent<CharacterController>().enabled = false;
