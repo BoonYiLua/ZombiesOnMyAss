@@ -1559,7 +1559,6 @@ GameObject:
   - component: {fileID: 4804795268543500153}
   - component: {fileID: 4804795268543500152}
   - component: {fileID: 4581380240305016489}
-  - component: {fileID: 3698929600375667748}
   - component: {fileID: 6037224605303876426}
   m_Layer: 0
   m_Name: P2
@@ -1575,7 +1574,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5651848236774142583}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 48, y: -0.19999999, z: 7.5}
   m_LocalScale: {x: 0.85789, y: 0.85789, z: 0.85789}
   m_Children:
@@ -1733,19 +1732,6 @@ MonoBehaviour:
   m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!65 &3698929600375667748
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5651848236774142583}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.5, y: 1.9340663, z: 1.0199962}
-  m_Center: {x: 0, y: 0.9870329, z: 0.009997825}
 --- !u!65 &6037224605303876426
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1757,8 +1743,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 1.9340663, z: 1.0199962}
-  m_Center: {x: 0, y: 0.9870329, z: 0.009997825}
+  m_Size: {x: 0.5, y: 1.9340663, z: 0.6982939}
+  m_Center: {x: 0, y: 0.9870329, z: -0.15085328}
 --- !u!1 &5827764360351629284
 GameObject:
   m_ObjectHideFlags: 0
