@@ -12,6 +12,7 @@ TagManager:
   - Zombie
   - Grenade
   - Teleporter
+  - Enemy 2
   layers:
   - Default
   - TransparentFX
@@ -20,8 +21,8 @@ TagManager:
   - Water
   - UI
   - Grenade
-  - 
-  - 
+  - P1
+  - P2
   - 
   - 
   - 
