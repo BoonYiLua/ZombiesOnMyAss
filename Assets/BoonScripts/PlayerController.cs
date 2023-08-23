@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour {
             controls.Gameplay.Grenade.performed += ctx => GetComponentInChildren<GrenadeThrower>().ThrowGrenade();
             controls.Gameplay.Switcher.performed += ctx => switchWeapon = true;
             controls.Gameplay.Switcher.canceled += ctx => switchWeapon = false;
-            controls.Gameplay.Ammo.performed += ctx => availableWeapons[currentWeapon].GetComponent<GunController>().GetComponent<AmmoBox>().ClaimAmmo();
+            controls.Gameplay.Ammo.performed += ctx => HandleAmmoInput();
         }
     }
 
@@ -164,7 +164,15 @@ public class PlayerController : MonoBehaviour {
             currentAmmoBox = null;
         }
     }
-
+    private void HandleAmmoInput() {
+        // Your code to handle the Ammo action goes here
+        // For example, you can call GetComponent<AmmoBox>().ClaimAmmo() here.
+        if (isNearAmmoBox) {
+            if (currentAmmoBox != null) {
+                currentAmmoBox.ClaimAmmo();
+            }
+        }
+    }
     private void SwitchWeapon(int weaponIndex) {
         // Disable all weapons
         for (int i = 0; i < availableWeapons.Count; i++) {

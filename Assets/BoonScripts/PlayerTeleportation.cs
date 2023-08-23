@@ -27,7 +27,7 @@ public class PlayerTeleportation : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.E) && onTeleporter) {
 
-            Debug.Log("Wdwdw");
+           
             TeleportPlayer();
         } 
          
@@ -41,7 +41,7 @@ public class PlayerTeleportation : MonoBehaviour {
             
     
         if (player != null) {
-            Debug.Log("wdwdwDD");
+      
             // Teleport the player to the target teleporter's position.
             player.GetComponent<CharacterController>().enabled = false;
             player.gameObject.transform.position = new Vector3(targetTeleporter.position.x, player.transform.position.y,targetTeleporter.position.z);
