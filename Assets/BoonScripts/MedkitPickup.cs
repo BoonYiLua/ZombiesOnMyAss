@@ -3,6 +3,7 @@ using UnityEngine;
 public class MedkitPickup : MonoBehaviour {
     public int healAmount = 50; // Amount of health restored by the medkit
     public float rotationSpeed = 60f; // The speed at which the pickup rotates
+    public ParticleSystem healingParticleEffect;
 
     // Reference to the PlayerController script
     public PlayerController playerController;
@@ -18,6 +19,9 @@ public class MedkitPickup : MonoBehaviour {
             // Check if the player's health is less than maxHealth before allowing pickup
             if (playerController != null && playerController.currentHealth < playerController.maxHealth) {
                 playerController.PickupMedkit(healAmount, medkitPrefab, gameObject);
+                if (healingParticleEffect != null) {
+                    healingParticleEffect.Play();
+                }
             }
         }
     }

@@ -64,7 +64,6 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void Start() {
-        //rb = GetComponent<Rigidbody>();
         character = GetComponent<CharacterController>();
         currentHealth = health;
         PlayerMovement = GetComponent<Animator>();

@@ -57,14 +57,15 @@ public class ZombieController : MonoBehaviour {
         // Destroy the Zombie
         Destroy(gameObject);
     }
-    private void OnCollisionEnter(Collision collision) {
-        if (collision.gameObject.CompareTag("Player")) {
+    private void OnTriggerEnter(Collider other) {
+        if (other.gameObject.CompareTag("Player")) {
             // Get the PlayerController component of the player
-            PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
+            PlayerController playerController = other.gameObject.GetComponent<PlayerController>();
 
             // If the player has a PlayerController component, deal damage to them
             if (playerController != null) {
                 playerController.TakeDamage(attackDamage);
+                Debug.Log("damage");
             }
         }
     }
