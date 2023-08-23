@@ -3,23 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RandomSpawner : MonoBehaviour {
+    public GameObject[] enemiesToSpawn;
+    public Transform[] spawnPoints;
 
-	public GameObject[] enemiesToSpawn;
-	void Start() {
-		InvokeRepeating("SpawnNow", 5, 4);
-	}
+    void Start() {
+        InvokeRepeating("SpawnNow", 3, 2);
+    }
 
-	Vector3 getRandomPos() {
-		float _x = Random.Range(-40, 40);
-		float _y = 0.5f;
-		float _z = Random.Range(-45, 45);
-		Vector3 newPos = new Vector3(-_x, _y, _z);
-		return newPos;
-	}
-	void SpawnNow() {
-		Instantiate(enemiesToSpawn[Random.Range(0, 2)], getRandomPos(), Quaternion.identity);
-	}
-	void Update() {
+    Transform getRandomSpawnPoint() {
+        int randomIndex = Random.Range(0, spawnPoints.Length);
+        return spawnPoints[randomIndex];
+    }
 
-	}
+    void SpawnNow() {
+        Transform spawnPoint = getRandomSpawnPoint();
+        GameObject enemy = Instantiate(enemiesToSpawn[Random.Range(0, enemiesToSpawn.Length)], spawnPoint.position, Quaternion.identity);
+        // Disable any scripts or components that control movement or behavior on the enemy
+    }
+
+    void Update() {
+
+    }
 }
