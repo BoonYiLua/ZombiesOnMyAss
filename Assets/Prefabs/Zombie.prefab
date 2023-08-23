@@ -1479,7 +1479,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   attackDamage: 10
-  damageParticlesPrefab: {fileID: 1833647516323130222, guid: 434c5a532cdf2c74981f1ed9e126a998, type: 3}
+  damageParticlesPrefab: {fileID: 19800000, guid: d92b3391f10a45c438296dbf699972e2, type: 3}
 --- !u!114 &6357544085064577403
 MonoBehaviour:
   m_ObjectHideFlags: 0
