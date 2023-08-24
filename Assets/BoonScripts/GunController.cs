@@ -1,25 +1,32 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class GunController : MonoBehaviour {
     public GameObject bulletPrefab;
-    public List<Transform> firePoints; // List of firepoints for the gun (optional)
-    public int magazineSize = 10; // The maximum ammo capacity in the magazine.
-    public int maxAmmo = 100; // The maximum total ammo.
+    public List<Transform> firePoints;
+    public int magazineSize = 10;
+    public int maxAmmo = 100;
     public float fireRate = 0.2f;
     public float reloadTime = 1.5f;
     public float bulletSpeed = 20f;
-    public int bulletsPerShot = 1; // Number of bullets fired per shot
+    public int bulletsPerShot = 1;
 
-    [SerializeField] private int currentAmmo; // The current total ammo.
-    [SerializeField] private int currentMagazineAmmo; // The current ammo in the magazine.
+    [SerializeField] private int currentAmmo;
+    [SerializeField] private int currentMagazineAmmo;
     public bool isReloading = false;
     private float nextFireTime = 0f;
+
+    [Header("UI Elements")]
+    public Text ammoText;
 
     private void Start() {
         currentAmmo = maxAmmo;
         currentMagazineAmmo = magazineSize;
+
+        // Update the UI text with the initial ammo values
+        UpdateAmmoUI();
     }
 
     private void Update() {
@@ -28,22 +35,21 @@ public class GunController : MonoBehaviour {
             return;
         }
 
-        // Check if the player is reloading, and return if true
         if (isReloading) {
             return;
         }
+
         if (GetComponentInParent<PlayerController>().player.ToString() == "P1") {
             if (Input.GetButton("Fire1")) {
                 Fire();
-
             }
         }
 
-        // Check if the player wants to manually reload
         if (Input.GetKeyDown(KeyCode.R) && currentAmmo > 0 && currentMagazineAmmo < magazineSize) {
             StartCoroutine(Reload());
         }
     }
+
     public void Fire() {
         if (Time.time >= nextFireTime) {
             nextFireTime = Time.time + .1f / fireRate;
@@ -52,37 +58,30 @@ public class GunController : MonoBehaviour {
             }
         }
     }
+
     private void Shoot() {
         if (currentMagazineAmmo > 0) {
             foreach (Transform firePoint in firePoints) {
-                // Instantiate the bullet prefab at the FirePoint position and rotation
                 GameObject newBullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
-
-                // Get the Rigidbody component of the bullet.
                 Rigidbody bulletRigidbody = newBullet.GetComponent<Rigidbody>();
-
-                // Calculate the direction to shoot (straight, in front)
                 Vector3 shootDirection = firePoint.forward;
-
-                // Add a force to the bullet to move it in the calculated direction with a certain speed.
                 bulletRigidbody.AddForce(shootDirection * bulletSpeed, ForceMode.VelocityChange);
             }
 
-            // Reduce ammo from the magazine
             currentMagazineAmmo--;
+            UpdateAmmoUI(); // Update the UI after each shot
         }
     }
 
     public IEnumerator Reload() {
         if (currentAmmo > 0 && currentMagazineAmmo < magazineSize) {
             isReloading = true;
-
             int ammoToReload = Mathf.Min(magazineSize - currentMagazineAmmo, currentAmmo);
             currentMagazineAmmo += ammoToReload;
             currentAmmo -= ammoToReload;
-
-            // Perform reload animation or logic here
             Debug.Log("Reloading...");
+
+            UpdateAmmoUI(); // Update the UI after the reload
 
             yield return new WaitForSeconds(reloadTime);
 
@@ -91,7 +90,6 @@ public class GunController : MonoBehaviour {
     }
 
     public void AddAmmo(int amount) {
-        // If the current ammo + amount exceeds the max ammo, add the excess ammo to the current magazine ammo
         if (currentAmmo + amount > maxAmmo) {
             int excessAmmo = (currentAmmo + amount) - maxAmmo;
             currentMagazineAmmo = Mathf.Clamp(currentMagazineAmmo + excessAmmo, 0, magazineSize);
@@ -99,5 +97,11 @@ public class GunController : MonoBehaviour {
         } else {
             currentAmmo = Mathf.Clamp(currentAmmo + amount, 0, maxAmmo);
         }
+
+        UpdateAmmoUI(); // Update the UI after adding ammo
+    }
+
+    private void UpdateAmmoUI() {
+        ammoText.text = currentMagazineAmmo.ToString() + " / " + currentAmmo.ToString();
     }
 }

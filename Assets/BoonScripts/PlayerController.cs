@@ -46,6 +46,9 @@ public class PlayerController : MonoBehaviour {
     [Header("UI Elements")]
     public Slider healthSlider; // Add this line to reference the health bar Slider
 
+    [Header("UI Elements")]
+    public Text ammoText1; // Reference to the first ammo text element
+    public Text ammoText2; // Reference to the second ammo text element (if applicable)
 
 
 
@@ -211,6 +214,29 @@ public class PlayerController : MonoBehaviour {
 
         // Enable the selected weapon
         availableWeapons[weaponIndex].SetActive(true);
+
+        // Enable the appropriate ammo text element and disable the others
+        switch (weaponIndex) {
+            case 0:
+                // Enable the first ammo text
+                ammoText1.gameObject.SetActive(true);
+
+                // Disable the second ammo text (if applicable)
+                if (ammoText2 != null) {
+                    ammoText2.gameObject.SetActive(false);
+                }
+                break;
+            case 1:
+                // Enable the second ammo text (if applicable)
+                if (ammoText2 != null) {
+                    ammoText2.gameObject.SetActive(true);
+                }
+
+                // Disable the first ammo text
+                ammoText1.gameObject.SetActive(false);
+                break;
+                
+        }
     }
 
     private System.Collections.IEnumerator waitSwitch() {
