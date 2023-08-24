@@ -59,6 +59,7 @@ public class GunController : MonoBehaviour {
                 Shoot();
             }
         }
+
         gunAudioSource.Play();
     }
 
