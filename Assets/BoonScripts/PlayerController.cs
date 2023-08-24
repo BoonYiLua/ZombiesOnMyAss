@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
     public float movementSpeed = 5f;
@@ -41,6 +42,13 @@ public class PlayerController : MonoBehaviour {
     bool switchWeapon;
     Animator PlayerMovement;
 
+
+    [Header("UI Elements")]
+    public Slider healthSlider; // Add this line to reference the health bar Slider
+
+
+
+
     [Header("Player Health")]
     public int maxHealth = 100;
     public int currentHealth; // Serialized variable for current health
@@ -64,7 +72,7 @@ public class PlayerController : MonoBehaviour {
             controls.Gameplay.Switcher.performed += ctx => switchWeapon = true;
             controls.Gameplay.Switcher.canceled += ctx => switchWeapon = false;
             controls.Gameplay.Ammo.performed += ctx => HandleAmmoInput();
-            controls.Gameplay.Teleport.performed += ctx => HandleTeleportInput(); // Add this line 
+            controls.Gameplay.Teleport.performed += ctx => HandleTeleportInput();
         }
     }
 
@@ -93,6 +101,7 @@ public class PlayerController : MonoBehaviour {
 
         // Move the character to the new position
         character.Move(newPosition - transform.position);
+
 
 
         // Player movement
@@ -216,7 +225,18 @@ public class PlayerController : MonoBehaviour {
                 currentHealth = 0; // Ensure health doesn't go below zero
                 Die(); // Player is dead if health drops to zero
             }
+
+            // Update the health UI
+            UpdateHealthUI();
         }
+    }
+
+    private void UpdateHealthUI() {
+        // Calculate the fill amount based on the current health and max health
+        float fillAmount = (float)currentHealth / maxHealth;
+
+        // Update the health bar Slider value
+        healthSlider.value = fillAmount;
     }
 
 
