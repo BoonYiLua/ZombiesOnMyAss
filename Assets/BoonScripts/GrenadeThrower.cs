@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GrenadeThrower : MonoBehaviour {
     public GameObject grenadePrefab; // Grenade prefab that will be thrown
@@ -9,6 +10,9 @@ public class GrenadeThrower : MonoBehaviour {
     public float throwCurve = 1.0f; // Amount of curve to apply to the throw (adjust as needed)
     public int grenadeCount = 0; // Current number of grenades held
     public GameObject throwTarget; // The target GameObject to determine the throw direction
+
+    public GameObject activeGrenadeObject; // GameObject for the active grenade image
+    public GameObject inactiveGrenadeObject; // GameObject for the inactive (grayed out) grenade image
 
     // Update is called once per frame
     void Update() {
@@ -19,14 +23,23 @@ public class GrenadeThrower : MonoBehaviour {
 
     public void PickupGrenade() {
         grenadeCount += 1;
-    }
 
+        // Activate the active grenade GameObject
+        if (activeGrenadeObject != null) {
+            activeGrenadeObject.SetActive(true);
+        }
+
+        // Deactivate the inactive grenade GameObject
+        if (inactiveGrenadeObject != null) {
+            inactiveGrenadeObject.SetActive(false);
+        }
+    }
 
     public int GrenadeCount {
         get { return grenadeCount; }
     }
 
-   public void ThrowGrenade() {
+    public void ThrowGrenade() {
         if (grenadeCount <= 0) return;
         // Ensure there is a target before throwing
         if (throwTarget == null) {
@@ -55,5 +68,17 @@ public class GrenadeThrower : MonoBehaviour {
 
         // Decrease the grenade count after throwing
         grenadeCount--;
+
+        // If there are no grenades left, deactivate the active grenade GameObject
+        // and activate the inactive (grayed out) grenade GameObject
+        if (grenadeCount <= 0) {
+            if (activeGrenadeObject != null) {
+                activeGrenadeObject.SetActive(false);
+            }
+
+            if (inactiveGrenadeObject != null) {
+                inactiveGrenadeObject.SetActive(true);
+            }
+        }
     }
 }
