@@ -1478,7 +1478,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
-  attackDamage: 10
+  attackDamage: 5
   damageParticlesPrefab: {fileID: 19800000, guid: d92b3391f10a45c438296dbf699972e2, type: 3}
 --- !u!114 &6357544085064577403
 MonoBehaviour:
@@ -1503,7 +1503,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 10
+  m_Speed: 5
   m_Acceleration: 8
   avoidancePriority: 45
   m_AngularSpeed: 120
