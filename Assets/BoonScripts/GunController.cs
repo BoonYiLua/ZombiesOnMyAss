@@ -12,6 +12,7 @@ public class GunController : MonoBehaviour {
     public float reloadTime = 1.5f;
     public float bulletSpeed = 20f;
     public int bulletsPerShot = 1;
+    public AudioSource gunAudioSource;
 
     [SerializeField] private int currentAmmo;
     [SerializeField] private int currentMagazineAmmo;
@@ -24,6 +25,7 @@ public class GunController : MonoBehaviour {
     private void Start() {
         currentAmmo = maxAmmo;
         currentMagazineAmmo = magazineSize;
+        gunAudioSource = GetComponent<AudioSource>();
 
         // Update the UI text with the initial ammo values
         UpdateAmmoUI();
@@ -57,6 +59,7 @@ public class GunController : MonoBehaviour {
                 Shoot();
             }
         }
+        gunAudioSource.Play();
     }
 
     private void Shoot() {

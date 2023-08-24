@@ -299,11 +299,13 @@ MonoBehaviour:
   maxAmmo: 200
   fireRate: 1
   reloadTime: 1.5
-  bulletSpeed: 3
+  bulletSpeed: 20
   bulletsPerShot: 1
+  gunAudioSource: {fileID: 0}
   currentAmmo: 0
   currentMagazineAmmo: 0
   isReloading: 0
+  ammoText: {fileID: 0}
 --- !u!1 &2857859350177743126
 GameObject:
   m_ObjectHideFlags: 0
